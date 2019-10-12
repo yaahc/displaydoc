@@ -6,10 +6,6 @@ use syn::{Ident, LitStr};
 impl Display {
     // Transform `"error {var}"` to `"error {}", var`.
     pub fn expand_shorthand(&mut self) {
-        if !self.args.is_empty() {
-            return;
-        }
-
         let span = self.fmt.span();
         let fmt = self.fmt.value();
         let mut read = fmt.as_str();

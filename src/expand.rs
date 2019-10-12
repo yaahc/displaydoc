@@ -7,10 +7,7 @@ pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
     match &input.data {
         Data::Struct(data) => impl_struct(input, data),
         Data::Enum(data) => impl_enum(input, data),
-        Data::Union(_) => Err(Error::new_spanned(
-            input,
-            "union as errors are not supported",
-        )),
+        Data::Union(_) => Err(Error::new_spanned(input, "Unions are not supported")),
     }
 }
 
@@ -62,9 +59,8 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
             .iter()
             .zip(displays)
             .map(|(variant, display)| {
-                let display = display.ok_or_else(|| {
-                    Error::new_spanned(variant, "missing #[error(\"...\")] display attribute")
-                })?;
+                let display =
+                    display.ok_or_else(|| Error::new_spanned(variant, "missing doc comment"))?;
                 let ident = &variant.ident;
                 Ok(match &variant.fields {
                     Fields::Named(fields) => {
@@ -90,7 +86,7 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
             }
         })
     } else {
-        None
+        return Err(Error::new_spanned(input, "Missing doc comments"));
     };
 
     Ok(quote! {
