@@ -1,6 +1,6 @@
-use displaydoc::DisplayDoc;
+use displaydoc::Display;
 
-#[derive(DisplayDoc)]
+#[derive(Display)]
 enum Happy {
     /// I really like Variant1
     Variant1,
