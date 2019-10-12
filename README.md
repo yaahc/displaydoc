@@ -1,8 +1,8 @@
 derive(DisplayDoc)
 ==================
 
-[![Latest Version](https://img.shields.io/crates/v/thiserror.svg)](https://crates.io/crates/thiserror)
-[![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/thiserror)
+[![Latest Version](https://img.shields.io/crates/v/displaydoc.svg)](https://crates.io/crates/displaydoc)
+[![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/displaydoc)
 
 This library provides a convenient derive macro for the standard library's
 [`std::fmt::Display`] trait.
@@ -11,7 +11,7 @@ This library provides a convenient derive macro for the standard library's
 
 ```toml
 [dependencies]
-displaydoc = "1.0"
+displaydoc = "0.1.1"
 ```
 
 *Compiler support: requires rustc 1.31+*
@@ -43,14 +43,6 @@ pub enum DataStoreError {
 <br>
 
 ## Details
-
-- Thiserror deliberately does not appear in your public API. You get the same
-  thing as if you had written an implementation of `std::error::Error` by hand,
-  and switching from handwritten impls to thiserror or vice versa is not a
-  breaking change.
-
-- Errors may be enums, structs with named fields, tuple structs, or unit
-  structs.
 
 - A `Display` impl is generated for your type if you provide doc comment
   messages on the struct or each variant of your enum, as shown above in the
