@@ -1,4 +1,4 @@
-derive(Display) # `From<docs>`
+derive(Display) /// `From<docs>`
 ===============
 
 [![Latest Version](https://img.shields.io/crates/v/displaydoc.svg)](https://crates.io/crates/displaydoc)
