@@ -1,8 +1,8 @@
 use proc_macro2::{TokenStream, TokenTree};
 use quote::{format_ident, quote, ToTokens};
 use std::iter::once;
-use syn::parse::{Nothing, Parse, ParseStream};
-use syn::{Attribute, Error, Field, Ident, Index, LitInt, LitStr, Result, Token};
+use syn::parse::{Parse, ParseStream};
+use syn::{Attribute, Ident, Index, LitInt, LitStr, Meta, Result, Token};
 
 pub struct Display {
     pub fmt: LitStr,
@@ -11,6 +11,7 @@ pub struct Display {
 
 impl Parse for Display {
     fn parse(input: ParseStream) -> Result<Self> {
+        dbg!("hi");
         let fmt: LitStr = input.parse()?;
 
         let mut args = TokenStream::new();
@@ -52,30 +53,35 @@ impl ToTokens for Display {
     }
 }
 
-pub fn is_source(field: &Field) -> Result<bool> {
-    for attr in &field.attrs {
-        if attr.path.is_ident("source") {
-            syn::parse2::<Nothing>(attr.tokens.clone())?;
-            return Ok(true);
-        }
-    }
-    Ok(false)
-}
-
 pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
-    let mut display = None;
-
     for attr in attrs {
-        if attr.path.is_ident("error") {
-            if display.is_some() {
-                return Err(Error::new_spanned(
-                    attr,
-                    "only one #[error(...)] attribute is allowed",
-                ));
-            }
-            display = Some(attr.parse_args()?);
+        if attr.path.is_ident("doc") {
+            let meta = attr.parse_meta()?;
+            let lit = match meta {
+                Meta::NameValue(syn::MetaNameValue {
+                    lit: syn::Lit::Str(lit),
+                    ..
+                }) => lit,
+                _ => unimplemented!(),
+            };
+
+            let fmt = lit.value();
+            let fmt = fmt.trim();
+            // .lines()
+            // .next()
+            // .expect("expect: input doc attribute must have at least 1 non empty line");
+
+            let lit = LitStr::new(fmt, lit.span());
+
+            let mut display = Display {
+                fmt: lit,
+                args: TokenStream::new(),
+            };
+
+            display.expand_shorthand();
+            return Ok(Some(display));
         }
     }
 
-    Ok(display)
+    Ok(None)
 }
