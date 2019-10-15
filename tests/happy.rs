@@ -1,3 +1,4 @@
+#![feature(lang_items, start)]
 use displaydoc::Display;
 
 #[derive(Display)]
