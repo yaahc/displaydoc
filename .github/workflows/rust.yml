@@ -6,6 +6,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - stable
+          - nightly
+          - 1.31.0
 
     steps:
     - uses: actions/checkout@v1
