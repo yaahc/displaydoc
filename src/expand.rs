@@ -28,8 +28,8 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
             Fields::Unit => quote!(_),
         };
         quote! {
-            impl #impl_generics std::fmt::Display for #ty #ty_generics #where_clause {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
+                fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
                     #[allow(unused_variables)]
                     let #pat = self;
                     #display
@@ -76,8 +76,8 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
             })
             .collect::<Result<Vec<_>>>()?;
         Some(quote! {
-            impl #impl_generics std::fmt::Display for #ty #ty_generics #where_clause {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
+                fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
                     #[allow(unused_variables)]
                     match self {
                         #(#arms,)*
