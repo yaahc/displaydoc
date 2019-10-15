@@ -7,13 +7,13 @@ warning: unused import: `displaydoc::Display`
    = note: `#[warn(unused_imports)]` on by default
 
 error[E0277]: `FakeType` doesn't implement `core::fmt::Display`
-  --> $DIR/without.rs:25:37
+  --> $DIR/without.rs:25:44
    |
-25 | static_assertions::assert_impl_all!(FakeType: core::fmt::Display);
-   | ------------------------------------^^^^^^^^----------------------
-   | |                                   |
-   | |                                   `FakeType` cannot be formatted with the default formatter
-   | required by this bound in `_::{{closure}}#0::assert_impl_all`
+25 | static_assertions::assert_impl_all!(label; FakeType, core::fmt::Display);
+   | -------------------------------------------^^^^^^^^----------------------
+   | |                                          |
+   | |                                          `FakeType` cannot be formatted with the default formatter
+   | required by this bound in `label::assert_impl_all`
    |
    = help: the trait `core::fmt::Display` is not implemented for `FakeType`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
