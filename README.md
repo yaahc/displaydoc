@@ -21,10 +21,10 @@ displaydoc = "0.1.3"
 ## Example
 
 ```rust
-use displaydoc::DisplayDoc;
+use displaydoc::Display;
 use thiserror::Error;
 
-#[derive(DisplayDoc, Error, Debug)]
+#[derive(Display, Error, Debug)]
 pub enum DataStoreError {
     /// data store disconnected
     Disconnect(#[source] io::Error),
