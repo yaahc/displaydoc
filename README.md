@@ -5,9 +5,9 @@ derive(Display) /// `From<docs>`
 [![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/displaydoc)
 
 This library provides a convenient derive macro for the standard library's
-[`std::fmt::Display`] trait.
+[`core::fmt::Display`] trait.
 
-[`std::fmt::Display`]: https://doc.rust-lang.org/std/fmt/trait.Display.html
+[`core::fmt::Display`]: https://doc.rust-lang.org/std/fmt/trait.Display.html
 
 ```toml
 [dependencies]
@@ -54,6 +54,13 @@ pub enum DataStoreError {
     - `/// {0}` ⟶ `write!("{}", self.0)`
     - `/// {var:?}` ⟶ `write!("{:?}", self.var)`
     - `/// {0:?}` ⟶ `write!("{:?}", self.0)`
+
+<br>
+
+## FAQ
+
+1. **Is this crate `no_std` compatible?**
+    * Yes! This crate implements the `core::fmt::Display` trait not the `std::fmt::Display` trait so it should work in `std` and `no_std` environments.
 
 <br>
 
