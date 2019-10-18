@@ -11,7 +11,7 @@ This library provides a convenient derive macro for the standard library's
 
 ```toml
 [dependencies]
-displaydoc = "0.1.3"
+displaydoc = "0.1.4"
 ```
 
 *Compiler support: requires rustc 1.31+*

@@ -1,9 +1,9 @@
 [package]
 name = "displaydoc"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Jane Lusby <jlusby@yaah.dev>"]
 edition = "2018"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/yaahc/displaydoc"
 homepage = "https://github.com/yaahc/displaydoc"
