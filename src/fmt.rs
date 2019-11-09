@@ -41,7 +41,7 @@ impl Display {
                 None => return,
             };
 
-            let arg = if next == '}' {
+            let arg = if core::cfg!(feature = "std") && next == '}' {
                 quote_spanned!(span=> , (&#ident).get_display())
             } else {
                 quote_spanned!(span=> , #ident)
