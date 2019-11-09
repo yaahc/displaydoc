@@ -1,5 +1,13 @@
 use displaydoc::Display;
-// use std::path::PathBuf;
+
+#[cfg(feature = "std")]
+use std::path::PathBuf;
+
+#[derive(Display)]
+/// Just a basic struct {thing}
+struct HappyStruct {
+    thing: &'static str,
+}
 
 #[derive(Display)]
 enum Happy {
@@ -18,8 +26,10 @@ enum Happy {
     /// Variant5 just has {0} many problems
     /// but multi line comments aren't one of them
     Variant5(u32),
-    // /// The path {0.display()}
-    // Variant6(PathBuf),
+
+    /// The path {0}
+    #[cfg(feature = "std")]
+    Variant6(PathBuf),
 }
 
 fn assert_display<T: std::fmt::Display>(input: T, expected: &'static str) {
@@ -37,8 +47,15 @@ fn does_it_print() {
         "Variant4 wants to have a lot of lines\n\n Lets see how this works out for it",
     );
     assert_display(Happy::Variant5(2), "Variant5 just has 2 many problems");
-    // assert_display(
-    //     Happy::Variant6(PathBuf::from("/var/log/happy")),
-    //     "The path /var/log/happy",
-    // );
+
+    assert_display(HappyStruct { thing: "hi" }, "Just a basic struct hi");
+}
+
+#[test]
+#[cfg(feature = "std")]
+fn does_it_print_path() {
+    assert_display(
+        Happy::Variant6(PathBuf::from("/var/log/happy")),
+        "The path /var/log/happy",
+    );
 }
