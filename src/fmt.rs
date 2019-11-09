@@ -3,6 +3,20 @@ use proc_macro2::TokenStream;
 use quote::quote_spanned;
 use syn::{Ident, LitStr};
 
+#[cfg(feature = "std")]
+const IS_STD: bool = true;
+#[cfg(not(feature = "std"))]
+const IS_STD: bool = false;
+
+macro_rules! peek_next {
+    ($read:ident) => {
+        match $read.chars().next() {
+            Some(next) => next,
+            None => return,
+        }
+    };
+}
+
 impl Display {
     // Transform `"error {var}"` to `"error {}", var`.
     pub fn expand_shorthand(&mut self) {
@@ -23,10 +37,7 @@ impl Display {
                 continue;
             }
 
-            let next = match read.chars().next() {
-                Some(next) => next,
-                None => return,
-            };
+            let next = peek_next!(read);
 
             let var = match next {
                 '0'..='9' => take_int(&mut read),
@@ -36,12 +47,9 @@ impl Display {
 
             let ident = Ident::new(&var, span);
 
-            let next = match read.chars().next() {
-                Some(next) => next,
-                None => return,
-            };
+            let next = peek_next!(read);
 
-            let arg = if core::cfg!(feature = "std") && next == '}' {
+            let arg = if IS_STD && next == '}' {
                 quote_spanned!(span=> , (&#ident).get_display())
             } else {
                 quote_spanned!(span=> , #ident)
