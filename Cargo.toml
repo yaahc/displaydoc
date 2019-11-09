@@ -16,7 +16,9 @@ A derive macro for implementing the display Trait via a doc comment and string i
 [lib]
 proc-macro = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = ["std"]
+std = []
 
 [dependencies]
 syn = "1.0"
@@ -28,3 +30,4 @@ trybuild = "1.0"
 static_assertions = "0.3.4"
 libc = { version = "0.2", default-features = false }
 rustversion = "1.0.0"
+pretty_assertions = "0.6.1"

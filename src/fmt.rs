@@ -15,22 +15,39 @@ impl Display {
         while let Some(brace) = read.find('{') {
             out += &read[..=brace];
             read = &read[brace + 1..];
+
+            // skip cases where we find a {{
             if read.starts_with('{') {
                 out.push('{');
                 read = &read[1..];
                 continue;
             }
+
             let next = match read.chars().next() {
                 Some(next) => next,
                 None => return,
             };
+
             let var = match next {
                 '0'..='9' => take_int(&mut read),
                 'a'..='z' | 'A'..='Z' | '_' => take_ident(&mut read),
                 _ => return,
             };
+
             let ident = Ident::new(&var, span);
-            args.extend(quote_spanned!(span=> , #ident));
+
+            let next = match read.chars().next() {
+                Some(next) => next,
+                None => return,
+            };
+
+            let arg = if next == '}' {
+                quote_spanned!(span=> , (&#ident).get_display())
+            } else {
+                quote_spanned!(span=> , #ident)
+            };
+
+            args.extend(arg);
         }
 
         out += read;
@@ -71,6 +88,7 @@ fn take_ident(read: &mut &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use pretty_assertions::assert_eq;
     use proc_macro2::Span;
 
     fn assert(input: &str, fmt: &str, args: &str) {
@@ -85,12 +103,15 @@ mod tests {
 
     #[test]
     fn test_expand() {
-        assert("error {var}", "error {}", ", var");
+        assert("error {var}", "error {}", ", ( & var ) . get_display ( )");
         assert("fn main() {{ }}", "fn main() {{ }}", "");
         assert(
             "{v} {v:?} {0} {0:?}",
             "{} {:?} {} {:?}",
-            ", v , v , _0 , _0",
+            ", ( & v ) . get_display ( ) , v , ( & _0 ) . get_display ( ) , _0",
         );
+
+        // assert("The path {0.display()}", "The path {}", "0.display()");
+        // assert("The path {0.display():?}", "The path {:?}", "0.display()");
     }
 }
