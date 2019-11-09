@@ -11,6 +11,42 @@ pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
     }
 }
 
+#[cfg(feature = "std")]
+fn specialization() -> TokenStream {
+    quote! {
+        trait DisplayToDisplayDoc {
+            fn get_display(&self) -> Self;
+        }
+
+        impl<T: core::fmt::Display> DisplayToDisplayDoc for &T {
+            fn get_display(&self) -> Self {
+                self
+            }
+        }
+
+        trait PathToDisplayDoc {
+            fn get_display(&self) -> std::path::Display<'_>;
+        }
+
+        impl PathToDisplayDoc for std::path::Path {
+            fn get_display(&self) -> std::path::Display<'_> {
+                self.display()
+            }
+        }
+
+        impl PathToDisplayDoc for std::path::PathBuf {
+            fn get_display(&self) -> std::path::Display<'_> {
+                self.display()
+            }
+        }
+    }
+}
+
+#[cfg(not(feature = "std"))]
+fn specialization() -> TokenStream {
+    quote! {}
+}
+
 fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
     let ty = &input.ident;
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
@@ -38,7 +74,11 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
         }
     });
 
+    let needed_traits = specialization();
+
     Ok(quote! {
+        #needed_traits
+
         #display
     })
 }
@@ -89,7 +129,11 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
         return Err(Error::new_spanned(input, "Missing doc comments"));
     };
 
+    let needed_traits = specialization();
+
     Ok(quote! {
+        #needed_traits
+
         #display
     })
 }
