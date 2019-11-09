@@ -4,38 +4,46 @@ use quote::{format_ident, quote};
 use syn::{Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Result};
 
 pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
-    match &input.data {
+    let impls = match &input.data {
         Data::Struct(data) => impl_struct(input, data),
         Data::Enum(data) => impl_enum(input, data),
         Data::Union(_) => Err(Error::new_spanned(input, "Unions are not supported")),
-    }
+    }?;
+
+    let helpers = specialization();
+    Ok(quote! {
+        const _: () = {
+            #helpers
+            #impls
+        };
+    })
 }
 
 #[cfg(feature = "std")]
 fn specialization() -> TokenStream {
     quote! {
         trait DisplayToDisplayDoc {
-            fn get_display(&self) -> Self;
+            fn __displaydoc_display(&self) -> &Self;
         }
 
-        impl<T: core::fmt::Display> DisplayToDisplayDoc for &T {
-            fn get_display(&self) -> Self {
+        impl<T: core::fmt::Display> DisplayToDisplayDoc for T {
+            fn __displaydoc_display(&self) -> &Self {
                 self
             }
         }
 
         trait PathToDisplayDoc {
-            fn get_display(&self) -> std::path::Display<'_>;
+            fn __displaydoc_display(&self) -> std::path::Display<'_>;
         }
 
         impl PathToDisplayDoc for std::path::Path {
-            fn get_display(&self) -> std::path::Display<'_> {
+            fn __displaydoc_display(&self) -> std::path::Display<'_> {
                 self.display()
             }
         }
 
         impl PathToDisplayDoc for std::path::PathBuf {
-            fn get_display(&self) -> std::path::Display<'_> {
+            fn __displaydoc_display(&self) -> std::path::Display<'_> {
                 self.display()
             }
         }
@@ -74,13 +82,7 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
         }
     });
 
-    let needed_traits = specialization();
-
-    Ok(quote! {
-        #needed_traits
-
-        #display
-    })
+    Ok(quote! { #display })
 }
 
 fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
@@ -93,7 +95,7 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
         .map(|variant| attr::display(&variant.attrs))
         .collect::<Result<Vec<_>>>()?;
 
-    let display = if displays.iter().any(Option::is_some) {
+    if displays.iter().any(Option::is_some) {
         let arms = data
             .variants
             .iter()
@@ -115,7 +117,7 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
                 })
             })
             .collect::<Result<Vec<_>>>()?;
-        Some(quote! {
+        Ok(quote! {
             impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
                 fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
                     #[allow(unused_variables)]
@@ -126,14 +128,6 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
             }
         })
     } else {
-        return Err(Error::new_spanned(input, "Missing doc comments"));
-    };
-
-    let needed_traits = specialization();
-
-    Ok(quote! {
-        #needed_traits
-
-        #display
-    })
+        Err(Error::new_spanned(input, "Missing doc comments"))
+    }
 }

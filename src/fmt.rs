@@ -3,11 +3,6 @@ use proc_macro2::TokenStream;
 use quote::quote_spanned;
 use syn::{Ident, LitStr};
 
-#[cfg(feature = "std")]
-const IS_STD: bool = true;
-#[cfg(not(feature = "std"))]
-const IS_STD: bool = false;
-
 macro_rules! peek_next {
     ($read:ident) => {
         match $read.chars().next() {
@@ -49,8 +44,8 @@ impl Display {
 
             let next = peek_next!(read);
 
-            let arg = if IS_STD && next == '}' {
-                quote_spanned!(span=> , (&#ident).get_display())
+            let arg = if cfg!(feature = "std") && next == '}' {
+                quote_spanned!(span=> , #ident.__displaydoc_display())
             } else {
                 quote_spanned!(span=> , #ident)
             };
@@ -120,11 +115,33 @@ mod tests {
         assert(
             "{v} {v:?} {0} {0:?}",
             "{} {:?} {} {:?}",
-            ", ( & v ) . get_display ( ) , v , ( & _0 ) . get_display ( ) , _0",
+            ", v . __displaydoc_display ( ) , v , _0 . __displaydoc_display ( ) , _0",
         );
-        assert("error {var}", "error {}", ", ( & var ) . get_display ( )");
+        assert(
+            "error {var}",
+            "error {}",
+            ", var . __displaydoc_display ( )",
+        );
 
-        // assert("The path {0.display()}", "The path {}", "0.display()");
-        // assert("The path {0.display():?}", "The path {:?}", "0.display()");
+        assert(
+            "The path {0}",
+            "The path {}",
+            ", _0 . __displaydoc_display ( )",
+        );
+        assert("The path {0:?}", "The path {:?}", ", _0");
+    }
+
+    #[test]
+    #[cfg_attr(feature = "std", ignore)]
+    fn test_nostd_expand() {
+        assert(
+            "{v} {v:?} {0} {0:?}",
+            "{} {:?} {} {:?}",
+            ", v , v , _0 , _0",
+        );
+        assert("error {var}", "error {}", ", var");
+
+        assert("The path {0}", "The path {}", ", _0");
+        assert("The path {0:?}", "The path {:?}", ", _0");
     }
 }
