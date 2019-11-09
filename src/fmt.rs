@@ -111,13 +111,18 @@ mod tests {
 
     #[test]
     fn test_expand() {
-        assert("error {var}", "error {}", ", ( & var ) . get_display ( )");
         assert("fn main() {{ }}", "fn main() {{ }}", "");
+    }
+
+    #[test]
+    #[cfg_attr(not(feature = "std"), ignore)]
+    fn test_std_expand() {
         assert(
             "{v} {v:?} {0} {0:?}",
             "{} {:?} {} {:?}",
             ", ( & v ) . get_display ( ) , v , ( & _0 ) . get_display ( ) , _0",
         );
+        assert("error {var}", "error {}", ", ( & var ) . get_display ( )");
 
         // assert("The path {0.display()}", "The path {}", "0.display()");
         // assert("The path {0.display():?}", "The path {:?}", "0.display()");
