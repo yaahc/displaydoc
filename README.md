@@ -14,7 +14,7 @@ This library provides a convenient derive macro for the standard library's
 displaydoc = "0.1"
 ```
 
-*Compiler support: requires rustc 1.31+*
+*Compiler support: requires rustc 1.34+*
 
 <br>
 
