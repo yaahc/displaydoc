@@ -1,8 +1,8 @@
 derive(Display) /// `From<docs>`
 ===============
 
-[![Latest Version](https://img.shields.io/crates/v/displaydoc.svg)](https://crates.io/crates/displaydoc)
-[![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/displaydoc)
+[![Latest Version](https://img.shields.io/crates/v/displaydoc-watt.svg)](https://crates.io/crates/displaydoc-watt)
+[![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/displaydoc-watt)
 
 This library provides a convenient derive macro for the standard library's
 [`core::fmt::Display`] trait.
@@ -11,7 +11,7 @@ This library provides a convenient derive macro for the standard library's
 
 ```toml
 [dependencies]
-displaydoc = "0.1"
+displaydoc-watt = "0.1"
 ```
 
 *Compiler support: requires rustc 1.34+*
@@ -21,7 +21,7 @@ displaydoc = "0.1"
 ## Example
 
 ```rust
-use displaydoc::Display;
+use displaydoc_watt::Display;
 use thiserror::Error;
 
 #[derive(Display, Error, Debug)]
@@ -60,7 +60,7 @@ pub enum DataStoreError {
 ## FAQ
 
 1. **Is this crate `no_std` compatible?**
-    * Yes! This crate implements the `core::fmt::Display` trait not the `std::fmt::Display` trait so it should work in `std` and `no_std` environments.
+    * Not at the moment, the primary `displaydoc` crate does support no_std but I have not yet figured out how to make that work when the proc macro is compiled to wasm.
 
 2. **Does this crate work with `Path` and `PathBuf` via the `Display` trait?**
     * Yuuup. This crate uses @dtolnay's [autoref specialization technique](https://github.com/dtolnay/case-studies/blob/master/autoref-specialization/README.md) to add a special trait for types to get the display impl, it then specializes for `Path` and `PathBuf` and when either of these types are found it calls `self.display()` to get a `std::path::Display<'_>` type which can be used with the Display format specifier!
