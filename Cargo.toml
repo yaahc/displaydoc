@@ -16,6 +16,9 @@ A derive macro for implementing the display Trait via a doc comment and string i
 [lib]
 proc-macro = true
 
+[features]
+default = ["std"]
+std = []
 [dependencies]
 watt = "0.3"
 
