@@ -17,7 +17,7 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
     }
 }
 
-use displaydoc::Display;
+use displaydoc_watt::Display;
 
 /// this type is pretty swell
 struct FakeType;

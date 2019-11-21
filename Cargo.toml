@@ -1,6 +1,6 @@
 [package]
-name = "displaydoc"
-version = "0.1.5"
+name = "displaydoc-watt"
+version = "0.1.0"
 authors = ["Jane Lusby <jlusby@yaah.dev>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -16,14 +16,8 @@ A derive macro for implementing the display Trait via a doc comment and string i
 [lib]
 proc-macro = true
 
-[features]
-default = ["std"]
-std = []
-
 [dependencies]
-syn = "1.0"
-quote = "1.0"
-proc-macro2 = "1.0"
+watt = "0.3"
 
 [dev-dependencies]
 trybuild = "1.0"

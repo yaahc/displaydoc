@@ -1,7 +1,7 @@
-warning: unused import: `displaydoc::Display`
+warning: unused import: `displaydoc_watt::Display`
   --> $DIR/without.rs:20:5
    |
-20 | use displaydoc::Display;
+20 | use displaydoc_watt::Display;
    |     ^^^^^^^^^^^^^^^^^^^
    |
    = note: `#[warn(unused_imports)]` on by default

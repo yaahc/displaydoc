@@ -1,4 +1,4 @@
-use displaydoc::Display;
+use displaydoc_watt::Display;
 
 #[cfg(feature = "std")]
 use std::path::PathBuf;

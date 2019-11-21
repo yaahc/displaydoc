@@ -1,16 +1,12 @@
 extern crate proc_macro;
 
-mod attr;
-mod expand;
-mod fmt;
-
 use proc_macro::TokenStream;
-use syn::{parse_macro_input, DeriveInput};
+use watt::WasmMacro;
+
+static MACRO: WasmMacro = WasmMacro::new(WASM);
+static WASM: &[u8] = include_bytes!("displaydoc.wasm");
 
 #[proc_macro_derive(Display)]
 pub fn derive_error(input: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(input as DeriveInput);
-    expand::derive(&input)
-        .unwrap_or_else(|err| err.to_compile_error())
-        .into()
+    MACRO.proc_macro("derive_error", input)
 }

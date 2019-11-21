@@ -1,4 +1,4 @@
-use displaydoc::Display;
+use displaydoc_watt::Display;
 
 #[derive(Debug, Display)]
 pub enum DataStoreError {
