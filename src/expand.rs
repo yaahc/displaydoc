@@ -5,7 +5,7 @@ use syn::{Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Result};
 
 pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
     let impls = match &input.data {
-        Data::Struct(data) => impl_struct(input, data),
+        Data::Struct(data) => impl_struct(inp, data),
         Data::Enum(data) => impl_enum(input, data),
         Data::Union(_) => Err(Error::new_spanned(input, "Unions are not supported")),
     }?;
