@@ -25,11 +25,11 @@ pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
 fn specialization() -> TokenStream {
     quote! {
         trait DisplayToDisplayDoc {
-            fn __displaydoc_display(&self) -> &Self;
+            fn __displaydoc_display(&self) -> Self;
         }
 
-        impl<T: core::fmt::Display> DisplayToDisplayDoc for T {
-            fn __displaydoc_display(&self) -> &Self {
+        impl<T: core::fmt::Display> DisplayToDisplayDoc for &T {
+            fn __displaydoc_display(&self) -> Self {
                 self
             }
         }
