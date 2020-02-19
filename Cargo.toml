@@ -7,7 +7,7 @@ license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/yaahc/displaydoc"
 homepage = "https://github.com/yaahc/displaydoc"
-documentation = "https://docs.rs/displaydoc/0.1.0/displaydoc"
+documentation = "https://docs.rs/displaydoc"
 keywords = ["display", "derive"]
 description = """
 A derive macro for implementing the display Trait via a doc comment and string interpolation
