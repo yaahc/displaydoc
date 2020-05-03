@@ -78,7 +78,7 @@ fn take_ident(read: &mut &str) -> String {
     let mut ident = String::new();
     for (i, ch) in read.char_indices() {
         match ch {
-            'a'..='z' | 'A'..='Z' | '_' => ident.push(ch),
+            'a'..='z' | 'A'..='Z' | '0'..='9' | '_' => ident.push(ch),
             _ => {
                 *read = &read[i..];
                 break;
@@ -124,6 +124,18 @@ mod tests {
         );
 
         assert(
+            "error {var1}",
+            "error {}",
+            ", var1 . __displaydoc_display ( )",
+        );
+
+        assert(
+            "error {var1var}",
+            "error {}",
+            ", var1var . __displaydoc_display ( )",
+        );
+
+        assert(
             "The path {0}",
             "The path {}",
             ", _0 . __displaydoc_display ( )",
@@ -143,5 +155,9 @@ mod tests {
 
         assert("The path {0}", "The path {}", ", _0");
         assert("The path {0:?}", "The path {:?}", ", _0");
+
+        assert("error {var1}", "error {}", ", var1");
+
+        assert("error {var1var}", "error {}", ", var1var");
     }
 }
