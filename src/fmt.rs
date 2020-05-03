@@ -110,21 +110,6 @@ mod tests {
     }
 
     #[test]
-    fn test_num_in_ident() {
-        assert(
-            "error {var1}",
-            "error {}",
-            ", var1 . __displaydoc_display ( )",
-        );
-
-        assert(
-            "error {var1var}",
-            "error {}",
-            ", var1var . __displaydoc_display ( )",
-        );
-    }
-
-    #[test]
     #[cfg_attr(not(feature = "std"), ignore)]
     fn test_std_expand() {
         assert(
@@ -136,6 +121,18 @@ mod tests {
             "error {var}",
             "error {}",
             ", var . __displaydoc_display ( )",
+        );
+
+        assert(
+            "error {var1}",
+            "error {}",
+            ", var1 . __displaydoc_display ( )",
+        );
+
+        assert(
+            "error {var1var}",
+            "error {}",
+            ", var1var . __displaydoc_display ( )",
         );
 
         assert(
@@ -158,5 +155,9 @@ mod tests {
 
         assert("The path {0}", "The path {}", ", _0");
         assert("The path {0:?}", "The path {:?}", ", _0");
+
+        assert("error {var1}", "error {}", ", var1");
+
+        assert("error {var1var}", "error {}", ", var1var");
     }
 }
