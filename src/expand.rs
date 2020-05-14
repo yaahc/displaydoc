@@ -1,14 +1,21 @@
 use crate::attr;
+use crate::input::DisplayDocInput;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Result};
 
 pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
-    let impls = match &input.data {
-        Data::Struct(data) => impl_struct(input, data),
-        Data::Enum(data) => impl_enum(input, data),
-        Data::Union(_) => Err(Error::new_spanned(input, "Unions are not supported")),
-    }?;
+    let dd_inputs = DisplayDocInput::new(&input);
+
+    let impls = if let Some(true) = dd_inputs.with_thiserror {
+        quote! {}
+    } else {
+        match &input.data {
+            Data::Struct(data) => impl_struct(input, data),
+            Data::Enum(data) => impl_enum(input, data),
+            Data::Union(_) => Err(Error::new_spanned(input, "Unions are not supported")),
+        }?
+    };
 
     let helpers = specialization();
     let dummy_const = format_ident!("_DERIVE_Display_FOR_{}", input.ident);

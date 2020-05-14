@@ -3,11 +3,12 @@ extern crate proc_macro;
 mod attr;
 mod expand;
 mod fmt;
+mod input;
 
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
 
-#[proc_macro_derive(Display)]
+#[proc_macro_derive(Display, attributes(displaydoc))]
 pub fn derive_error(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     expand::derive(&input)
