@@ -28,10 +28,8 @@ impl DisplayDocInput {
                         } else {
                             panic!("with_thiserror arg must be boolean");
                         }
-                    } else {
-                        if let Some(ident) = pair.path.get_ident() {
-                            panic!("Attribute {:?} is not supported", ident.to_string())
-                        };
+                    } else if let Some(ident) = pair.path.get_ident() {
+                        panic!("Attribute {:?} is not supported", ident.to_string())
                     }
                 };
             }
