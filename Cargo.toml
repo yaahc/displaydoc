@@ -21,7 +21,7 @@ default = ["std"]
 std = []
 
 [dependencies]
-syn = "1.0"
+syn = { version = "1.0", features = ["extra-traits"] }
 quote = "1.0"
 proc-macro2 = "1.0"
 
@@ -31,3 +31,5 @@ static_assertions = "0.3.4"
 libc = { version = "0.2", default-features = false }
 rustversion = "1.0.0"
 pretty_assertions = "0.6.1"
+thiserror = "1.0.18"
+anyhow = "1.0.31"
