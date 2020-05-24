@@ -20,7 +20,6 @@ impl Display {
         let mut read = fmt.as_str();
         let mut out = String::new();
         let mut args = TokenStream::new();
-
         while let Some(brace) = read.find('{') {
             out += &read[..=brace];
             read = &read[brace + 1..];
