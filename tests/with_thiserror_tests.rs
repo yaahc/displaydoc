@@ -1,8 +1,8 @@
 use anyhow::anyhow;
 use displaydoc::Display;
 use std::error::Error as _;
-use thiserror::Error;
 use std::io;
+use thiserror::Error;
 
 fn assert_display<T: std::fmt::Display>(input: T, expected: &'static str) {
     let out = format!("{}", input);
