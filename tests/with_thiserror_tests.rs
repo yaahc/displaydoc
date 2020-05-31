@@ -1,6 +1,6 @@
 use anyhow::anyhow;
 use displaydoc::Display;
-use std::error::Error as _;
+use std::error::Error as StdError;
 use std::io;
 use thiserror::Error;
 
@@ -20,13 +20,13 @@ fn test_transparent_for_enum() {
 
     let var = MyError::Variant(anyhow!("inner").context("outer"));
     assert_display(&var, "outer");
-    // assert_eq!(var.source().unwrap().to_string(), "inner")
+    assert_eq!(var.source().unwrap().to_string(), "inner")
 }
 
 #[test]
 fn test_transparent_for_struct() {
     #[derive(Display, Error, Debug)]
-    #[display(transparent)]
+    #[error(transparent)]
     struct Error(ErrorKind);
 
     #[derive(Display, Error, Debug)]
@@ -44,7 +44,7 @@ fn test_transparent_for_struct() {
     let io = io::Error::new(io::ErrorKind::Other, "oh no!");
     let error = Error(ErrorKind::from(io));
     assert_eq!("E1", error.to_string());
-    // error.source().unwrap().downcast_ref::<io::Error>().unwrap();
+    error.source().unwrap().downcast_ref::<io::Error>().unwrap();
 }
 
 #[test]
@@ -67,4 +67,32 @@ fn test_errordoc_for_struct() {
         variant: u8,
     }
     assert_display(MyError { variant: 42 }, "I'm a doc for MyError");
+}
+
+#[test]
+fn test_thiserror_implicit_and_source_works() {
+    #[derive(Display, Error, Debug)]
+    #[error("implicit source")]
+    struct ImplicitSource {
+        source: io::Error,
+    }
+
+    #[derive(Display, Error, Debug)]
+    #[error("explicit source")]
+    struct ExplicitSource {
+        source: String,
+        #[source]
+        io: io::Error,
+    }
+
+    let io = io::Error::new(io::ErrorKind::Other, "oh no!");
+    let error = ImplicitSource { source: io };
+    error.source().unwrap().downcast_ref::<io::Error>().unwrap();
+
+    let io = io::Error::new(io::ErrorKind::Other, "oh no!");
+    let error = ExplicitSource {
+        source: String::new(),
+        io,
+    };
+    error.source().unwrap().downcast_ref::<io::Error>().unwrap();
 }
