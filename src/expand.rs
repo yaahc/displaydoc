@@ -95,7 +95,6 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
         .iter()
         .map(|variant| attr::display(&variant.attrs))
         .collect::<Result<Vec<_>>>()?;
-
     if displays.iter().any(Option::is_some) {
         let arms = data
             .variants

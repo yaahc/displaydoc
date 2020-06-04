@@ -42,7 +42,6 @@ impl Display {
             let ident = Ident::new(&var, span);
 
             let next = peek_next!(read);
-
             let arg = if cfg!(feature = "std") && next == '}' {
                 quote_spanned!(span=> , #ident.__displaydoc_display())
             } else {

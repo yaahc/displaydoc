@@ -1,8 +1,8 @@
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use syn::{
-    spanned::Spanned, Attribute, Lit::Str, LitStr, Meta, MetaList, MetaNameValue, NestedMeta,
-    Result,
+    spanned::Spanned, Attribute, Error, Lit::Str, LitStr, Meta, MetaList, MetaNameValue,
+    NestedMeta, Result,
 };
 
 pub struct Display {
@@ -28,24 +28,23 @@ pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
     if let Some(attr) = attr {
         let meta = attr.parse_meta()?;
         let lit = match meta {
-            Meta::NameValue(MetaNameValue { lit: Str(lit), .. }) => Some(lit),
-            Meta::NameValue(_) => unimplemented!("namevalue"),
-            Meta::Path(_) => unimplemented!("path"),
+            Meta::NameValue(MetaNameValue { lit: Str(lit), .. }) => Some(Ok(lit)),
             Meta::List(MetaList { nested, .. }) => {
                 nested.iter().find_map(|nested_attr| match nested_attr {
                     NestedMeta::Meta(Meta::Path(path)) => {
                         if path.is_ident("transparent") {
-                            Some(LitStr::new("{0}", attr.span()))
+                            Some(Ok(LitStr::new("{0}", attr.span())))
                         } else {
-                            unimplemented!()
+                            Some(Err(Error::new_spanned(attr, "attr error")))
                         }
                     }
-                    NestedMeta::Lit(Str(lit)) => Some(lit.clone()),
-                    _ => unimplemented!(),
+                    NestedMeta::Lit(Str(lit)) => Some(Ok(lit.clone())),
+                    _ => Some(Err(Error::new_spanned(attr, "cant accept the type"))),
                 })
             }
+            _ => Some(Err(Error::new_spanned(attr, "namevalue or meta"))),
         };
-        if let Some(l) = lit {
+        if let Some(Ok(l)) = lit {
             let mut display = Display {
                 fmt: LitStr::new(l.value().trim(), l.span()),
                 args: TokenStream::new(),
