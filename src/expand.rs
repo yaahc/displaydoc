@@ -34,6 +34,12 @@ fn specialization() -> TokenStream {
             }
         }
 
+        // If the `std` feature gets enabled we want to ensure that any crate
+        // using displaydoc can still reference the std crate, which is already
+        // being compiled in by whoever enabled the `std` feature in
+        // `displaydoc`, even if the crates using displaydoc are no_std.
+        extern crate std;
+
         trait PathToDisplayDoc {
             fn __displaydoc_display(&self) -> std::path::Display<'_>;
         }
