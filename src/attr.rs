@@ -23,7 +23,7 @@ pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
         .filter(|attr| attr.path.is_ident("doc"))
         .count();
     if num_doc_attrs > 1 {
-        panic!("Multi-line comments are not currently supported by displaydoc. Please consider using block comments (/** */)");
+        panic!("Multi-line comments are not currently supported by displaydoc. Please consider using block doc comments (/** */)");
     }
 
     for attr in attrs {
