@@ -44,7 +44,7 @@ fn does_it_print() {
     assert_display(Happy::Variant3 { sometimes: "hi" }, "Variant3 is okay hi");
     assert_display(
         Happy::Variant4,
-        "Variant4 wants to have a lot of lines\n\n Lets see how this works out for it",
+        "* Variant4 wants to have a lot of lines\n     *\n     * Lets see how this works out for it",
     );
     assert_display(Happy::Variant5(2), "Variant5 just has 2 many problems");
 

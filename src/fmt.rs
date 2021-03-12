@@ -115,30 +115,30 @@ mod tests {
         assert(
             "{v} {v:?} {0} {0:?}",
             "{} {:?} {} {:?}",
-            ", v . __displaydoc_display ( ) , v , _0 . __displaydoc_display ( ) , _0",
+            ", v . __displaydoc_display () , v , _0 . __displaydoc_display () , _0",
         );
         assert(
             "error {var}",
             "error {}",
-            ", var . __displaydoc_display ( )",
+            ", var . __displaydoc_display ()",
         );
 
         assert(
             "error {var1}",
             "error {}",
-            ", var1 . __displaydoc_display ( )",
+            ", var1 . __displaydoc_display ()",
         );
 
         assert(
             "error {var1var}",
             "error {}",
-            ", var1var . __displaydoc_display ( )",
+            ", var1var . __displaydoc_display ()",
         );
 
         assert(
             "The path {0}",
             "The path {}",
-            ", _0 . __displaydoc_display ( )",
+            ", _0 . __displaydoc_display ()",
         );
         assert("The path {0:?}", "The path {:?}", ", _0");
     }
