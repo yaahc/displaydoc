@@ -117,11 +117,7 @@ mod tests {
             "{} {:?} {} {:?}",
             ", v . __displaydoc_display () , v , _0 . __displaydoc_display () , _0",
         );
-        assert(
-            "error {var}",
-            "error {}",
-            ", var . __displaydoc_display ()",
-        );
+        assert("error {var}", "error {}", ", var . __displaydoc_display ()");
 
         assert(
             "error {var1}",

@@ -29,7 +29,14 @@ pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
                 _ => unimplemented!(),
             };
 
-            let lit = LitStr::new(lit.value().trim(), lit.span());
+            let lit = LitStr::new(
+                &lit.value()
+                    .trim()
+                    // Deal with rustc including unnecessary parts of the doc comment :(
+                    .replace("\n     *", "\n")
+                    .trim_start_matches("* "),
+                lit.span(),
+            );
 
             let mut display = Display {
                 fmt: lit,
