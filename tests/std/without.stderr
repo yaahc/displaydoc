@@ -13,7 +13,7 @@ error[E0277]: `FakeType` doesn't implement `std::fmt::Display`
    | -------------------------------------------^^^^^^^^----------------------
    | |                                          |
    | |                                          `FakeType` cannot be formatted with the default formatter
-   | required by this bound in `label::assert_impl_all`
+   | required by this bound in `assert_impl_all`
    |
    = help: the trait `std::fmt::Display` is not implemented for `FakeType`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
