@@ -23,8 +23,8 @@ enum Happy {
      * Lets see how this works out for it
      */
     Variant4,
-    /// Variant5 just has {0} many problems
-    /// but multi line comments aren't one of them
+    /// Variant5 has a parameter {0} and some regular comments
+    // A regular comment that won't get picked
     Variant5(u32),
 
     /// The path {0}
@@ -86,7 +86,10 @@ fn does_it_print() {
         Happy::Variant4,
         "Variant4 wants to have a lot of lines\n\nLets see how this works out for it",
     );
-    assert_display(Happy::Variant5(2), "Variant5 just has 2 many problems");
+    assert_display(
+        Happy::Variant5(2),
+        "Variant5 has a parameter 2 and some regular comments",
+    );
 
     assert_display(HappyStruct { thing: "hi" }, "Just a basic struct hi");
 
