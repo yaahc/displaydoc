@@ -107,9 +107,18 @@ fn does_it_print() {
         inner_mod::InnerHappy::Variant5(2),
         "Variant5 just has 2 many problems",
     );
-    assert_display(inner_mod::InnerHappy::Variant6, "what happens if we\nput text on the first line?");
-    assert_display(inner_mod::InnerHappy::Variant7, "what happens if we don\'t use *?");
-    assert_display(inner_mod::InnerHappy::Variant8, "what about extra new lines?");
+    assert_display(
+        inner_mod::InnerHappy::Variant6,
+        "what happens if we\nput text on the first line?",
+    );
+    assert_display(
+        inner_mod::InnerHappy::Variant7,
+        "what happens if we don\'t use *?",
+    );
+    assert_display(
+        inner_mod::InnerHappy::Variant8,
+        "what about extra new lines?",
+    );
 }
 
 #[test]
