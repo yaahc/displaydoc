@@ -33,10 +33,9 @@ pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
             let doc_str = lit
                 .value()
                 .lines()
-                .map(|line| line.trim().trim_start_matches("*").trim())
+                .map(|line| line.trim().trim_start_matches('*').trim())
                 .collect::<Vec<&str>>()
-                .join("\n")
-                .to_string();
+                .join("\n");
 
             let lit = LitStr::new(doc_str.trim(), lit.span());
 
