@@ -29,14 +29,16 @@ pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
                 _ => unimplemented!(),
             };
 
-            let lit = LitStr::new(
-                &lit.value()
-                    .trim()
-                    // Deal with rustc including unnecessary parts of the doc comment :(
-                    .replace("\n     *", "\n")
-                    .trim_start_matches("* "),
-                lit.span(),
-            );
+            // Make an attempt and cleaning up multiline doc comments
+            let doc_str = lit
+                .value()
+                .lines()
+                .map(|line| line.trim().trim_start_matches("*").trim())
+                .collect::<Vec<&str>>()
+                .join("\n")
+                .to_string();
+
+            let lit = LitStr::new(doc_str.trim(), lit.span());
 
             let mut display = Display {
                 fmt: lit,
