@@ -62,7 +62,6 @@
 #![doc(html_root_url = "https://docs.rs/color-eyre/0.5.10")]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(
-    missing_doc_code_examples,
     rust_2018_idioms,
     unreachable_pub,
     bad_style,
