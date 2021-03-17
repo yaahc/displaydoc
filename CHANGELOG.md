@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- next-header -->
 
 ## [Unreleased] - ReleaseDate
+
+## [0.2.0] - 2021-03-16
 # Changed
 
 - (BREAKING) disallow multiple `doc` attributes in display impl
@@ -17,4 +19,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   lines are needed.
 
 <!-- next-url -->
+[Unreleased]: https://github.com/yaahc/displaydoc/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/yaahc/displaydoc/releases/tag/v0.2.0
