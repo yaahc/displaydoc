@@ -15,6 +15,7 @@
 //! ## Example
 //!
 //! ```rust
+//! use std::io;
 //! use displaydoc::Display;
 //! use thiserror::Error;
 //!

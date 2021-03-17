@@ -21,6 +21,7 @@ displaydoc = "0.2"
 ## Example
 
 ```rust
+use std::io;
 use displaydoc::Display;
 use thiserror::Error;
 
