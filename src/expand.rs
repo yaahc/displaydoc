@@ -3,7 +3,7 @@ use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Result};
 
-pub fn derive(input: &DeriveInput) -> Result<TokenStream> {
+pub(crate) fn derive(input: &DeriveInput) -> Result<TokenStream> {
     let impls = match &input.data {
         Data::Struct(data) => impl_struct(input, data),
         Data::Enum(data) => impl_enum(input, data),

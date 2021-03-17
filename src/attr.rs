@@ -2,9 +2,9 @@ use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use syn::{Attribute, LitStr, Meta, Result};
 
-pub struct Display {
-    pub fmt: LitStr,
-    pub args: TokenStream,
+pub(crate) struct Display {
+    pub(crate) fmt: LitStr,
+    pub(crate) args: TokenStream,
 }
 
 impl ToTokens for Display {
@@ -17,11 +17,12 @@ impl ToTokens for Display {
     }
 }
 
-pub fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
+pub(crate) fn display(attrs: &[Attribute]) -> Result<Option<Display>> {
     let num_doc_attrs = attrs
         .iter()
         .filter(|attr| attr.path.is_ident("doc"))
         .count();
+
     if num_doc_attrs > 1 {
         panic!("Multi-line comments are not currently supported by displaydoc. Please consider using block doc comments (/** */)");
     }

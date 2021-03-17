@@ -11,7 +11,7 @@ This library provides a convenient derive macro for the standard library's
 
 ```toml
 [dependencies]
-displaydoc = "0.1"
+displaydoc = "0.2"
 ```
 
 *Compiler support: requires rustc 1.31+*
@@ -21,6 +21,7 @@ displaydoc = "0.1"
 ## Example
 
 ```rust
+use std::io;
 use displaydoc::Display;
 use thiserror::Error;
 
@@ -81,4 +82,3 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
 be dual licensed as above, without any additional terms or conditions.
 </sub>
-
