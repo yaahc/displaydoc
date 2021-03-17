@@ -14,7 +14,7 @@ macro_rules! peek_next {
 
 impl Display {
     // Transform `"error {var}"` to `"error {}", var`.
-    pub fn expand_shorthand(&mut self) {
+    pub(crate) fn expand_shorthand(&mut self) {
         let span = self.fmt.span();
         let fmt = self.fmt.value();
         let mut read = fmt.as_str();
