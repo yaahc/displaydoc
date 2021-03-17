@@ -68,9 +68,9 @@ search="<!-- next-url -->"
 replace="<!-- next-url -->\n[Unreleased]: https://github.com/yaahc/{{crate_name}}/compare/{{tag_name}}...HEAD"
 exactly=1
 
-# # Disable this replacement on the very first release
-# [[package.metadata.release.pre-release-replacements]]
-# file = "CHANGELOG.md"
-# search = "\\.\\.\\.HEAD"
-# replace="...{{tag_name}}"
-# exactly = 1
+# Disable this replacement on the very first release
+[[package.metadata.release.pre-release-replacements]]
+file = "CHANGELOG.md"
+search = "\\.\\.\\.HEAD"
+replace="...{{tag_name}}"
+exactly = 1
