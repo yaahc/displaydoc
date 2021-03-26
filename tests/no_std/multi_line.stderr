@@ -4,7 +4,7 @@ error: proc-macro derive panicked
 23 | #[derive(Display)]
    |          ^^^^^^^
    |
-   = help: message: Multi-line comments are not currently supported by displaydoc. Please consider using block doc comments (/** */)
+   = help: message: Multi-line comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_extra_doc_attributes] attribute to your type next to the derive.
 
 error[E0277]: `TestType` doesn't implement `Display`
   --> $DIR/multi_line.rs:34:44
