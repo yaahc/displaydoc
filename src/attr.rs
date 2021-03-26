@@ -18,16 +18,16 @@ impl ToTokens for Display {
 }
 
 pub(crate) struct AttrsHelper {
-    allow_multi_line: bool,
+    ignore_multi_line: bool,
 }
 
 impl AttrsHelper {
     pub(crate) fn new(attrs: &[Attribute]) -> Self {
-        let allow_multi_line = attrs
+        let ignore_multi_line = attrs
             .iter()
-            .any(|attr| attr.path.is_ident("allow_multi_line"));
+            .any(|attr| attr.path.is_ident("ignore_multi_line"));
 
-        Self { allow_multi_line }
+        Self { ignore_multi_line }
     }
 
     pub(crate) fn display(&self, attrs: &[Attribute]) -> Result<Option<Display>> {
@@ -36,8 +36,8 @@ impl AttrsHelper {
             .filter(|attr| attr.path.is_ident("doc"))
             .count();
 
-        if !self.allow_multi_line && num_doc_attrs > 1 {
-            panic!("Multi-line comments are not currently supported by displaydoc. Please consider using block doc comments (/** */)");
+        if !self.ignore_multi_line && num_doc_attrs > 1 {
+            panic!("Multi-line comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_multi_line] attribute to your type next to the derive.");
         }
 
         for attr in attrs {

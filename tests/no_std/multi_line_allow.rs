@@ -21,7 +21,7 @@ use displaydoc::Display;
 
 /// this type is pretty swell
 #[derive(Display)]
-#[allow_multi_line]
+#[ignore_multi_line]
 enum TestType {
     /// This one is okay
     Variant1,

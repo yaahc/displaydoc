@@ -10,7 +10,7 @@ struct HappyStruct {
 }
 
 #[derive(Display)]
-#[allow_multi_line]
+#[ignore_multi_line]
 /// Just a basic struct {thing}
 /// and this line should get ignored
 struct HappyStruct2 {
