@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- next-header -->
 
 ## [Unreleased] - ReleaseDate
+# Added
+- Added opt in support for ignoring extra doc attributes
 
 ## [0.2.0] - 2021-03-16
 # Changed
