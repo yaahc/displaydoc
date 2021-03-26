@@ -1,5 +1,4 @@
-use crate::attr;
-use attr::AttrsHelper;
+use super::attr::AttrsHelper;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Result};
