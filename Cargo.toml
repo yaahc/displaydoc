@@ -21,7 +21,7 @@ default = ["std"]
 std = []
 
 [dependencies]
-syn = { version = "1.0", features = ["extra-traits"] }
+syn = "1.0"
 quote = "1.0"
 proc-macro2 = "1.0"
 
