@@ -1,6 +1,6 @@
 [package]
 name = "displaydoc"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Jane Lusby <jlusby@yaah.dev>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -62,15 +62,16 @@ search="<!-- next-header -->"
 replace="<!-- next-header -->\n\n## [Unreleased] - ReleaseDate"
 exactly=1
 
-[[package.metadata.release.pre-release-replacements]]
-file="CHANGELOG.md"
-search="<!-- next-url -->"
-replace="<!-- next-url -->\n[Unreleased]: https://github.com/yaahc/{{crate_name}}/compare/{{tag_name}}...HEAD"
-exactly=1
-
 # Disable this replacement on the very first release
 [[package.metadata.release.pre-release-replacements]]
 file = "CHANGELOG.md"
 search = "\\.\\.\\.HEAD"
 replace="...{{tag_name}}"
 exactly = 1
+# END SECTION, do not comment out the replacement below this, and do not reorder them
+
+[[package.metadata.release.pre-release-replacements]]
+file="CHANGELOG.md"
+search="<!-- next-url -->"
+replace="<!-- next-url -->\n[Unreleased]: https://github.com/yaahc/{{crate_name}}/compare/{{tag_name}}...HEAD"
+exactly=1

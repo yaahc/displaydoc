@@ -1,4 +1,4 @@
-use crate::attr;
+use super::attr::AttrsHelper;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Result};
@@ -67,7 +67,9 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
     let ty = &input.ident;
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
 
-    let display = attr::display(&input.attrs)?.map(|display| {
+    let helper = AttrsHelper::new(&input.attrs);
+
+    let display = helper.display(&input.attrs)?.map(|display| {
         let pat = match &data.fields {
             Fields::Named(fields) => {
                 let var = fields.named.iter().map(|field| &field.ident);
@@ -97,10 +99,12 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
     let ty = &input.ident;
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
 
+    let helper = AttrsHelper::new(&input.attrs);
+
     let displays = data
         .variants
         .iter()
-        .map(|variant| attr::display(&variant.attrs))
+        .map(|variant| helper.display(&variant.attrs))
         .collect::<Result<Vec<_>>>()?;
 
     if displays.iter().any(Option::is_some) {

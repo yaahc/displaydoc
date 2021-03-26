@@ -59,7 +59,7 @@
 //!
 //! 2. **Does this crate work with `Path` and `PathBuf` via the `Display` trait?**
 //!     * Yuuup. This crate uses @dtolnay's [autoref specialization technique](https://github.com/dtolnay/case-studies/blob/master/autoref-specialization/README.md) to add a special trait for types to get the display impl, it then specializes for `Path` and `PathBuf` and when either of these types are found it calls `self.display()` to get a `std::path::Display<'_>` type which can be used with the Display format specifier!
-#![doc(html_root_url = "https://docs.rs/displaydoc/0.2.0")]
+#![doc(html_root_url = "https://docs.rs/displaydoc/0.2.1")]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(
     rust_2018_idioms,
@@ -94,7 +94,7 @@ use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
 
 /// Derive macro for implementing `Display` via doc comment attributes
-#[proc_macro_derive(Display)]
+#[proc_macro_derive(Display, attributes(ignore_extra_doc_attributes))]
 pub fn derive_error(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     expand::derive(&input)
