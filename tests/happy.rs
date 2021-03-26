@@ -10,6 +10,14 @@ struct HappyStruct {
 }
 
 #[derive(Display)]
+#[allow_multi_line]
+/// Just a basic struct {thing}
+/// and this line should get ignored
+struct HappyStruct2 {
+    thing: &'static str,
+}
+
+#[derive(Display)]
 enum Happy {
     /// I really like Variant1
     Variant1,
@@ -92,6 +100,8 @@ fn does_it_print() {
     );
 
     assert_display(HappyStruct { thing: "hi" }, "Just a basic struct hi");
+
+    assert_display(HappyStruct2 { thing: "hi2" }, "Just a basic struct hi2");
 
     assert_display(inner_mod::InnerHappy::Variant1, "I really like Variant1");
     assert_display(
