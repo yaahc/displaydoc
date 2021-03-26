@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- next-header -->
 
 ## [Unreleased] - ReleaseDate
+
+## [0.2.1] - 2021-03-26
 # Added
 - Added opt in support for ignoring extra doc attributes
 
@@ -21,5 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   lines are needed.
 
 <!-- next-url -->
-[Unreleased]: https://github.com/yaahc/displaydoc/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/yaahc/displaydoc/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/yaahc/displaydoc/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/yaahc/displaydoc/releases/tag/v0.2.0

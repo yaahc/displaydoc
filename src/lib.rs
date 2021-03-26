@@ -59,7 +59,7 @@
 //!
 //! 2. **Does this crate work with `Path` and `PathBuf` via the `Display` trait?**
 //!     * Yuuup. This crate uses @dtolnay's [autoref specialization technique](https://github.com/dtolnay/case-studies/blob/master/autoref-specialization/README.md) to add a special trait for types to get the display impl, it then specializes for `Path` and `PathBuf` and when either of these types are found it calls `self.display()` to get a `std::path::Display<'_>` type which can be used with the Display format specifier!
-#![doc(html_root_url = "https://docs.rs/displaydoc/0.2.0")]
+#![doc(html_root_url = "https://docs.rs/displaydoc/0.2.1")]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(
     rust_2018_idioms,
