@@ -56,6 +56,18 @@ pub enum DataStoreError {
     - `/// {var:?}` ⟶ `write!("{:?}", self.var)`
     - `/// {0:?}` ⟶ `write!("{:?}", self.0)`
 
+- Two optional attributes can be added to your types next to the derive:
+
+    - `#[ignore_extra_doc_attributes]` makes the macro ignore any doc
+      comment attributes (or `///` lines) after the first. Multi-line
+      comments using `///` are otherwise treated as an error, so use this
+      attribute or consider switching to block doc comments (`/** */`).
+
+    - `#[prefix_enum_doc_attributes]` combines the doc comment message on
+      your enum itself with the messages for each variant, in the format
+      “enum: variant”. When added to an enum, the doc comment on the enum
+      becomes mandatory. When added to any other type, it has no effect.
+
 <br>
 
 ## FAQ
