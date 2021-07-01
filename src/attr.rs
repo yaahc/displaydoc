@@ -97,7 +97,11 @@ impl AttrsHelper {
         Ok(None)
     }
 
-    pub(crate) fn display_with_input(&self, r#enum: &[Attribute], variant: &[Attribute]) -> Result<Option<VariantDisplay>> {
+    pub(crate) fn display_with_input(
+        &self,
+        r#enum: &[Attribute],
+        variant: &[Attribute],
+    ) -> Result<Option<VariantDisplay>> {
         let r#enum = if self.prefix_enum_doc_attributes {
             let result = self
                 .display(r#enum)?
@@ -108,6 +112,8 @@ impl AttrsHelper {
             None
         };
 
-        Ok(self.display(variant)?.map(|variant| VariantDisplay { r#enum, variant }))
+        Ok(self
+            .display(variant)?
+            .map(|variant| VariantDisplay { r#enum, variant }))
     }
 }

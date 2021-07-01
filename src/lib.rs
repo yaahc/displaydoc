@@ -106,10 +106,10 @@ use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
 
 /// Derive macro for implementing `Display` via doc comment attributes
-#[proc_macro_derive(Display, attributes(
-    ignore_extra_doc_attributes,
-    prefix_enum_doc_attributes,
-))]
+#[proc_macro_derive(
+    Display,
+    attributes(ignore_extra_doc_attributes, prefix_enum_doc_attributes,)
+)]
 pub fn derive_error(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     expand::derive(&input)
