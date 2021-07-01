@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- next-header -->
 
 ## [Unreleased] - ReleaseDate
+# Added
+- Added prefix feature to use the doc comment from an enum and prepend it
+  before the error message from each variant.
 
 ## [0.2.1] - 2021-03-26
 # Added
