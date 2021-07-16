@@ -1,6 +1,6 @@
 [package]
 name = "displaydoc"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Jane Lusby <jlusby@yaah.dev>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
