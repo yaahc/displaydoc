@@ -1,6 +1,6 @@
 [package]
 name = "displaydoc"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Jane Lusby <jlusby@yaah.dev>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -40,6 +40,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [package.metadata.release]
 no-dev-version = true
+pre-release-hook = ["./update-readme.sh"]
 
 [[package.metadata.release.pre-release-replacements]]
 file = "CHANGELOG.md"
@@ -60,7 +61,7 @@ replace="{{date}}"
 [[package.metadata.release.pre-release-replacements]]
 file="CHANGELOG.md"
 search="<!-- next-header -->"
-replace="<!-- next-header -->\n\n## [Unreleased] - ReleaseDate"
+replace="<!-- next-header -->\n\n# [Unreleased] - ReleaseDate"
 exactly=1
 
 # Disable this replacement on the very first release
@@ -76,3 +77,4 @@ file="CHANGELOG.md"
 search="<!-- next-url -->"
 replace="<!-- next-url -->\n[Unreleased]: https://github.com/yaahc/{{crate_name}}/compare/{{tag_name}}...HEAD"
 exactly=1
+
