@@ -40,6 +40,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [package.metadata.release]
 no-dev-version = true
+pre-release-hook = ["./update-readme.sh"]
 
 [[package.metadata.release.pre-release-replacements]]
 file = "CHANGELOG.md"
@@ -76,3 +77,4 @@ file="CHANGELOG.md"
 search="<!-- next-url -->"
 replace="<!-- next-url -->\n[Unreleased]: https://github.com/yaahc/{{crate_name}}/compare/{{tag_name}}...HEAD"
 exactly=1
+
