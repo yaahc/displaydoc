@@ -61,7 +61,7 @@ replace="{{date}}"
 [[package.metadata.release.pre-release-replacements]]
 file="CHANGELOG.md"
 search="<!-- next-header -->"
-replace="<!-- next-header -->\n\n## [Unreleased] - ReleaseDate"
+replace="<!-- next-header -->\n\n# [Unreleased] - ReleaseDate"
 exactly=1
 
 # Disable this replacement on the very first release
