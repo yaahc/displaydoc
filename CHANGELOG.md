@@ -6,19 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- next-header -->
 
-## [Unreleased] - ReleaseDate
+# [Unreleased] - ReleaseDate
+## Added
+- Added `#[displaydoc("..")]` attribute for overriding a doc comment
 
-## [0.2.2] - 2021-07-01
-# Added
+# [0.2.2] - 2021-07-01
+## Added
 - Added prefix feature to use the doc comment from an enum and prepend it
   before the error message from each variant.
 
-## [0.2.1] - 2021-03-26
-# Added
+# [0.2.1] - 2021-03-26
+## Added
 - Added opt in support for ignoring extra doc attributes
 
-## [0.2.0] - 2021-03-16
-# Changed
+# [0.2.0] - 2021-03-16
+## Changed
 
 - (BREAKING) disallow multiple `doc` attributes in display impl
   [https://github.com/yaahc/displaydoc/pull/22]. Allowing and ignoring extra

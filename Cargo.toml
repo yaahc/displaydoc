@@ -15,6 +15,7 @@ A derive macro for implementing the display Trait via a doc comment and string i
 
 [lib]
 proc-macro = true
+path = "src/lib.rs"
 
 [features]
 default = ["std"]

@@ -62,6 +62,10 @@
 //!       “enum: variant”. When added to an enum, the doc comment on the enum
 //!       becomes mandatory. When added to any other type, it has no effect.
 //!
+//! - In case you want to have an independent doc comment, the
+//!   `#[displaydoc("...")` atrribute may be used on the variant or struct to
+//!   override it.
+//!
 //! <br>
 //!
 //! ## FAQ
@@ -108,7 +112,7 @@ use syn::{parse_macro_input, DeriveInput};
 /// Derive macro for implementing `Display` via doc comment attributes
 #[proc_macro_derive(
     Display,
-    attributes(ignore_extra_doc_attributes, prefix_enum_doc_attributes,)
+    attributes(ignore_extra_doc_attributes, prefix_enum_doc_attributes, displaydoc)
 )]
 pub fn derive_error(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
