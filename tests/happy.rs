@@ -38,6 +38,11 @@ enum Happy {
     /// The path {0}
     #[cfg(feature = "std")]
     Variant6(PathBuf),
+
+    /// These docs are ignored
+    #[displaydoc("Variant7 has a parameter {0} and uses #[displaydoc]")]
+    /// These docs are also ignored
+    Variant7(u32),
 }
 
 // Used for testing indented doc comments
@@ -98,7 +103,10 @@ fn does_it_print() {
         Happy::Variant5(2),
         "Variant5 has a parameter 2 and some regular comments",
     );
-
+    assert_display(
+        Happy::Variant7(2),
+        "Variant7 has a parameter 2 and uses #[displaydoc]",
+    );
     assert_display(HappyStruct { thing: "hi" }, "Just a basic struct hi");
 
     assert_display(HappyStruct2 { thing: "hi2" }, "Just a basic struct hi2");

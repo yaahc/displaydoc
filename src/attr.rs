@@ -54,6 +54,21 @@ impl AttrsHelper {
     }
 
     pub(crate) fn display(&self, attrs: &[Attribute]) -> Result<Option<Display>> {
+        let displaydoc_attr = attrs.iter().find(|attr| attr.path.is_ident("displaydoc"));
+
+        if let Some(displaydoc_attr) = displaydoc_attr {
+            let lit = displaydoc_attr
+                .parse_args()
+                .expect("#[displaydoc(\"foo\")] must contain string arguments");
+            let mut display = Display {
+                fmt: lit,
+                args: TokenStream::new(),
+            };
+
+            display.expand_shorthand();
+            return Ok(Some(display));
+        }
+
         let num_doc_attrs = attrs
             .iter()
             .filter(|attr| attr.path.is_ident("doc"))
