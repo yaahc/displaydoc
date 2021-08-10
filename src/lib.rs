@@ -8,7 +8,7 @@
 //! displaydoc = "0.2"
 //! ```
 //!
-//! *Compiler support: requires rustc 1.31+*
+//! *Compiler support: requires rustc 1.36+*
 //!
 //! <br>
 //!
