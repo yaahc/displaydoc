@@ -28,7 +28,7 @@ proc-macro2 = "1.0"
 
 [dev-dependencies]
 trybuild = "1.0"
-static_assertions = "0.3.4"
+static_assertions = "1.1"
 libc = { version = "0.2", default-features = false }
 rustversion = "1.0.0"
 pretty_assertions = "0.6.1"
