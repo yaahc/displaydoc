@@ -107,7 +107,15 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
         .map(|variant| helper.display_with_input(&input.attrs, &variant.attrs))
         .collect::<Result<Vec<_>>>()?;
 
-    if displays.iter().any(Option::is_some) {
+    if data.variants.is_empty() {
+        Ok(quote! {
+            impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
+                fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+                    unreachable!("empty enums cannot be instantiated and thus cannot be printed")
+                }
+            }
+        })
+    } else if displays.iter().any(Option::is_some) {
         let arms = data
             .variants
             .iter()
