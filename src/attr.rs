@@ -89,7 +89,7 @@ impl AttrsHelper {
                     _ => unimplemented!(),
                 };
 
-                // Make an attempt and cleaning up multiline doc comments
+                // Make an attempt at cleaning up multiline doc comments.
                 let doc_str = lit
                     .value()
                     .lines()
