@@ -33,6 +33,37 @@ jobs:
         rust:
           - stable
           - nightly
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - uses: Swatinem/rust-cache@v1
+      - name: Install cargo-nextest
+        uses: baptiste0928/cargo-install@v1
+        with:
+          crate: cargo-nextest
+          version: 0.9
+      - uses: actions-rs/cargo@v1
+        with:
+          command: nextest
+          args: run
+      - uses: actions-rs/cargo@v1
+        with:
+          command: nextest
+          args: run --no-default-features
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --doc
+
+  test-msrv:
+    name: msrv Test Suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
           - 1.45.0
     steps:
       - uses: actions/checkout@v1
@@ -40,6 +71,7 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
           override: true
+      - uses: Swatinem/rust-cache@v1
       - uses: actions-rs/cargo@v1
         with:
           command: test
