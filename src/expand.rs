@@ -384,13 +384,13 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
                 Ok(match &variant.fields {
                     Fields::Named(fields) => {
                         let var = fields.named.iter().map(|field| &field.ident);
-                        quote!(#ty::#ident { #(#var),* } => { #display })
+                        quote!(Self::#ident { #(#var),* } => { #display })
                     }
                     Fields::Unnamed(fields) => {
                         let var = (0..fields.unnamed.len()).map(|i| format_ident!("_{}", i));
-                        quote!(#ty::#ident(#(#var),*) => { #display })
+                        quote!(Self::#ident(#(#var),*) => { #display })
                     }
-                    Fields::Unit => quote!(#ty::#ident => { #display }),
+                    Fields::Unit => quote!(Self::#ident => { #display }),
                 })
             })
             .collect::<Result<Vec<_>>>()?;
