@@ -3,7 +3,7 @@ use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote};
 use syn::{
     punctuated::Punctuated,
-    token::{Add, Colon, Colon2, Comma, Where},
+    token::{Colon, Comma, PathSep, Plus, Where},
     Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Generics, Ident, Path, PathArguments,
     PathSegment, PredicateType, Result, TraitBound, TraitBoundModifier, Type, TypeParam,
     TypeParamBound, TypePath, WhereClause, WherePredicate,
@@ -110,7 +110,7 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
 
 /// Create a `where` predicate for `ident`, without any [bound][TypeParamBound]s yet.
 fn new_empty_where_type_predicate(ident: Ident) -> PredicateType {
-    let mut path_segments = Punctuated::<PathSegment, Colon2>::new();
+    let mut path_segments = Punctuated::<PathSegment, PathSep>::new();
     path_segments.push_value(PathSegment {
         ident,
         arguments: PathArguments::None,
@@ -127,7 +127,7 @@ fn new_empty_where_type_predicate(ident: Ident) -> PredicateType {
         colon_token: Colon {
             spans: [Span::call_site()],
         },
-        bounds: Punctuated::<TypeParamBound, Add>::new(),
+        bounds: Punctuated::<TypeParamBound, Plus>::new(),
     }
 }
 
@@ -149,14 +149,14 @@ enum UseGlobalPrefix {
 
 /// Create a path with segments composed of [Idents] *without* any [PathArguments].
 fn join_paths(name_segments: &[&str], use_global_prefix: UseGlobalPrefix) -> Path {
-    let mut segments = Punctuated::<PathSegment, Colon2>::new();
+    let mut segments = Punctuated::<PathSegment, PathSep>::new();
     assert!(!name_segments.is_empty());
     segments.push_value(PathSegment {
         ident: Ident::new(name_segments[0], Span::call_site()),
         arguments: PathArguments::None,
     });
     for name in name_segments[1..].iter() {
-        segments.push_punct(Colon2 {
+        segments.push_punct(PathSep {
             spans: [Span::call_site(), Span::mixed_site()],
         });
         segments.push_value(PathSegment {
@@ -166,7 +166,7 @@ fn join_paths(name_segments: &[&str], use_global_prefix: UseGlobalPrefix) -> Pat
     }
     Path {
         leading_colon: match use_global_prefix {
-            UseGlobalPrefix::LeadingColon => Some(Colon2 {
+            UseGlobalPrefix::LeadingColon => Some(PathSep {
                 spans: [Span::call_site(), Span::mixed_site()],
             }),
             UseGlobalPrefix::NoLeadingColon => None,
@@ -205,7 +205,7 @@ fn add_display_constraint_to_type_predicate(
         path: display_path,
     });
     if !predicate_that_needs_a_display_impl.bounds.is_empty() {
-        predicate_that_needs_a_display_impl.bounds.push_punct(Add {
+        predicate_that_needs_a_display_impl.bounds.push_punct(Plus {
             spans: [Span::call_site()],
         });
     }
