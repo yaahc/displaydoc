@@ -8,7 +8,7 @@
 //! displaydoc = "0.2"
 //! ```
 //!
-//! *Compiler support: requires rustc 1.45+*
+//! *Compiler support: requires rustc 1.56+*
 //!
 //! <br>
 //!
@@ -98,7 +98,6 @@
     rust_2018_idioms,
     unreachable_pub,
     bad_style,
-    const_err,
     dead_code,
     improper_ctypes,
     non_shorthand_field_patterns,
