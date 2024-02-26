@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "std"), allow(internal_features))]
 #![cfg_attr(not(feature = "std"), feature(lang_items, start))]
 #![cfg_attr(not(feature = "std"), no_std)]
 

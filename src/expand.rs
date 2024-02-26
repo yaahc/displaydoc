@@ -36,7 +36,7 @@ fn specialization() -> TokenStream {
             fn __displaydoc_display(&self) -> Self;
         }
 
-        impl<T: core::fmt::Display> DisplayToDisplayDoc for &T {
+        impl<T: ::core::fmt::Display> DisplayToDisplayDoc for &T {
             fn __displaydoc_display(&self) -> Self {
                 self
             }
@@ -49,17 +49,17 @@ fn specialization() -> TokenStream {
         extern crate std;
 
         trait PathToDisplayDoc {
-            fn __displaydoc_display(&self) -> std::path::Display<'_>;
+            fn __displaydoc_display(&self) -> ::std::path::Display<'_>;
         }
 
-        impl PathToDisplayDoc for std::path::Path {
-            fn __displaydoc_display(&self) -> std::path::Display<'_> {
+        impl PathToDisplayDoc for ::std::path::Path {
+            fn __displaydoc_display(&self) -> ::std::path::Display<'_> {
                 self.display()
             }
         }
 
-        impl PathToDisplayDoc for std::path::PathBuf {
-            fn __displaydoc_display(&self) -> std::path::Display<'_> {
+        impl PathToDisplayDoc for ::std::path::PathBuf {
+            fn __displaydoc_display(&self) -> ::std::path::Display<'_> {
                 self.display()
             }
         }
@@ -91,8 +91,8 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
             Fields::Unit => quote!(_),
         };
         quote! {
-            impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
-                fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+            impl #impl_generics ::core::fmt::Display for #ty #ty_generics #where_clause {
+                fn fmt(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
                     // NB: This destructures the fields of `self` into named variables (for unnamed
                     // fields, it uses _0, _1, etc as above). The `#[allow(unused_variables)]`
                     // section means it doesn't have to parse the individual field references out of
@@ -366,8 +366,8 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
 
     if data.variants.is_empty() {
         Ok(quote! {
-            impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
-                fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+            impl #impl_generics ::core::fmt::Display for #ty #ty_generics #where_clause {
+                fn fmt(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
                     unreachable!("empty enums cannot be instantiated and thus cannot be printed")
                 }
             }
@@ -395,8 +395,8 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
             })
             .collect::<Result<Vec<_>>>()?;
         Ok(quote! {
-            impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
-                fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+            impl #impl_generics ::core::fmt::Display for #ty #ty_generics #where_clause {
+                fn fmt(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
                     #[allow(unused_variables)]
                     match self {
                         #(#arms,)*
