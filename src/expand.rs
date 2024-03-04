@@ -19,10 +19,9 @@ pub(crate) fn derive(input: &DeriveInput) -> Result<TokenStream> {
     }?;
 
     let helpers = specialization();
-    let dummy_const = format_ident!("_DERIVE_Display_FOR_{}", input.ident);
     Ok(quote! {
         #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
-        const #dummy_const: () = {
+        const _: () = {
             #helpers
             #impls
         };
