@@ -18,12 +18,9 @@ pub(crate) fn derive(input: &DeriveInput) -> Result<TokenStream> {
         Data::Union(_) => Err(Error::new_spanned(input, "Unions are not supported")),
     }?;
 
-    let helpers = specialization();
-    let dummy_const = format_ident!("_DERIVE_Display_FOR_{}", input.ident);
     Ok(quote! {
         #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
-        const #dummy_const: () = {
-            #helpers
+        const _: () = {
             #impls
         };
     })
@@ -78,6 +75,7 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
 
     let helper = AttrsHelper::new(&input.attrs);
 
+    let helpers = specialization();
     let display = helper.display(&input.attrs)?.map(|display| {
         let pat = match &data.fields {
             Fields::Named(fields) => {
@@ -93,6 +91,8 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
         quote! {
             impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
                 fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+                    #helpers
+
                     // NB: This destructures the fields of `self` into named variables (for unnamed
                     // fields, it uses _0, _1, etc as above). The `#[allow(unused_variables)]`
                     // section means it doesn't have to parse the individual field references out of
@@ -373,6 +373,7 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
             }
         })
     } else if displays.iter().any(Option::is_some) {
+        let helpers = specialization();
         let arms = data
             .variants
             .iter()
@@ -397,6 +398,7 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
         Ok(quote! {
             impl #impl_generics core::fmt::Display for #ty #ty_generics #where_clause {
                 fn fmt(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+                    #helpers
                     #[allow(unused_variables)]
                     match self {
                         #(#arms,)*
