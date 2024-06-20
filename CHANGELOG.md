@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+# [0.2.5] - 2024-06-20
+
+# Changed
+ - Don't name the output of the const block to work around `non_local_definitions` error (#47)
+ - Reference the `core` crate correctly to avoid clashes with modules named `core` (#45)
+ - Explicitly list MSRV in Cargo.toml (#51)
+ - Bump edition to 2021 (#51)
+
 # [0.2.4] - 2022-05-02
 
 ## Added
