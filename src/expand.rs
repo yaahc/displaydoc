@@ -48,17 +48,17 @@ fn specialization() -> TokenStream {
         extern crate std;
 
         trait PathToDisplayDoc {
-            fn __displaydoc_display(&self) -> ::std::path::Display<'_>;
+            fn __displaydoc_display(&self) -> std::path::Display<'_>;
         }
 
-        impl PathToDisplayDoc for ::std::path::Path {
-            fn __displaydoc_display(&self) -> ::std::path::Display<'_> {
+        impl PathToDisplayDoc for std::path::Path {
+            fn __displaydoc_display(&self) -> std::path::Display<'_> {
                 self.display()
             }
         }
 
-        impl PathToDisplayDoc for ::std::path::PathBuf {
-            fn __displaydoc_display(&self) -> ::std::path::Display<'_> {
+        impl PathToDisplayDoc for std::path::PathBuf {
+            fn __displaydoc_display(&self) -> std::path::Display<'_> {
                 self.display()
             }
         }
