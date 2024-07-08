@@ -9,7 +9,7 @@ use syn::{
     TypeParamBound, TypePath, WhereClause, WherePredicate,
 };
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 pub(crate) fn derive(input: &DeriveInput) -> Result<TokenStream> {
     let impls = match &input.data {
@@ -224,9 +224,9 @@ fn add_display_constraint_to_type_predicate(
 fn extract_trait_constraints_from_source(
     where_clause: &WhereClause,
     type_params: &[&TypeParam],
-) -> HashMap<Ident, Vec<TraitBound>> {
+) -> BTreeMap<Ident, Vec<TraitBound>> {
     // Add trait bounds provided at the declaration site of type parameters for the struct/enum.
-    let mut param_constraint_mapping: HashMap<Ident, Vec<TraitBound>> = type_params
+    let mut param_constraint_mapping: BTreeMap<Ident, Vec<TraitBound>> = type_params
         .iter()
         .map(|type_param| {
             let trait_bounds: Vec<TraitBound> = type_param
