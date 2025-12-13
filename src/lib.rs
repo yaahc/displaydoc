@@ -70,8 +70,8 @@
 //! - Two optional attributes can be added to your types next to the derive:
 //!
 //!     - `#[ignore_extra_doc_attributes]` makes the macro ignore any doc
-//!       comment attributes (or `///` lines) after the first. Multi-line
-//!       comments using `///` are otherwise treated as an error, so use this
+//!       comment attributes (or `///` lines) after the last non-empty line. Multi-line
+//!       comments with line breaks using `///` are otherwise treated as an error, so use this
 //!       attribute or consider switching to block doc comments (`/** */`).
 //!
 //!     - `#[prefix_enum_doc_attributes]` combines the doc comment message on

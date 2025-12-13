@@ -8,6 +8,9 @@ pub enum DataStoreError {
     Redaction(String),
     /// invalid header (expected {expected:?}, found {found:?})
     InvalidHeader { expected: String, found: String },
+    /// connection refused:
+    /// please try again later
+    ConnectionRefused,
     /// unknown data store error
     Unknown,
 }
@@ -32,5 +35,15 @@ fn main() {
     println!(
         "Enum value `InvalidHeader` should be printed as:\n\t{}",
         invalid_header
+    );
+
+    println!(
+        "Enum value `ConnectionRefused` should be printed as:\n\t{}",
+        DataStoreError::ConnectionRefused
+    );
+
+    println!(
+        "Enum value `Unknown` should be printed as:\n\t{}",
+        DataStoreError::Unknown
     );
 }
