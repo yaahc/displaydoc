@@ -40,6 +40,16 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - uses: Swatinem/rust-cache@v1
+      # Don't run uitests on nightly since the output can change
+      - name: Set skip flags
+        id: set-skip
+        run: |
+          if [ "${{ matrix.rust }}" == "nightly" ]; then
+            echo "skip-flags=--skip ui" >> $GITHUB_OUTPUT
+          else
+            echo "skip-flags=" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
       - name: Install cargo-nextest
         uses: baptiste0928/cargo-install@v1
         with:
@@ -48,11 +58,11 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: nextest
-          args: run
+          args: run ${{ steps.set-skip.output.skip-flags }}
       - uses: actions-rs/cargo@v1
         with:
           command: nextest
-          args: run --no-default-features
+          args: run --no-default-features ${{ steps.set-skip.output.skip-flags }}
       - uses: actions-rs/cargo@v1
         with:
           command: test
