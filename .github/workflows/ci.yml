@@ -22,11 +22,13 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - name: Downgrade deps for MSRV
-        if: ${{ matrix.rust == "1.56.0" }}
+        if: ${{ matrix.rust == '1.56.0' }}
         run: |
           cargo update -p libc --precise 0.2.160
           cargo update -p pretty_assertions --precise 1.4.0
-          cargo update -p proc_macro2 --precise 1.0.101
+          cargo update -p proc-macro2 --precise 1.0.101
+          cargo update -p quote --precise 1.0.40
+          cargo update -p glob --precise 0.3.2
       - uses: actions-rs/cargo@v1
         with:
           command: check
@@ -46,16 +48,6 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - uses: Swatinem/rust-cache@v1
-      # Don't run uitests on nightly since the output can change
-      - name: Set skip flags
-        id: set-skip
-        run: |
-          if [ "${{ matrix.rust }}" == "nightly" ]; then
-            echo "skip-flags=--skip ui" >> $GITHUB_OUTPUT
-          else
-            echo "skip-flags=" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
       - name: Install cargo-nextest
         uses: baptiste0928/cargo-install@v1
         with:
@@ -64,11 +56,11 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: nextest
-          args: run ${{ steps.set-skip.output.skip-flags }}
+          args: run
       - uses: actions-rs/cargo@v1
         with:
           command: nextest
-          args: run --no-default-features ${{ steps.set-skip.output.skip-flags }}
+          args: run --no-default-features
       - uses: actions-rs/cargo@v1
         with:
           command: test
@@ -93,7 +85,9 @@ jobs:
         run: |
           cargo update -p libc --precise 0.2.160
           cargo update -p pretty_assertions --precise 1.4.0
-          cargo update -p proc_macro2 --precise 1.0.101
+          cargo update -p proc-macro2 --precise 1.0.101
+          cargo update -p quote --precise 1.0.40
+          cargo update -p glob --precise 0.3.2
       - uses: actions-rs/cargo@v1
         with:
           command: test
