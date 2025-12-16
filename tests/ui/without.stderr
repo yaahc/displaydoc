@@ -4,16 +4,19 @@ warning: unused import: `displaydoc::Display`
 1 | use displaydoc::Display;
   |     ^^^^^^^^^^^^^^^^^^^
   |
-  = note: `#[warn(unused_imports)]` on by default
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
 
 error[E0277]: `FakeType` doesn't implement `std::fmt::Display`
  --> tests/ui/without.rs:6:37
   |
 6 | static_assertions::assert_impl_all!(FakeType: core::fmt::Display);
-  |                                     ^^^^^^^^ `FakeType` cannot be formatted with the default formatter
+  |                                     ^^^^^^^^ unsatisfied trait bound
   |
-  = help: the trait `std::fmt::Display` is not implemented for `FakeType`
-  = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+help: the trait `std::fmt::Display` is not implemented for `FakeType`
+ --> tests/ui/without.rs:4:1
+  |
+4 | struct FakeType;
+  | ^^^^^^^^^^^^^^^
 note: required by a bound in `assert_impl_all`
  --> tests/ui/without.rs:6:1
   |

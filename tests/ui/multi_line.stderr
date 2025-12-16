@@ -10,10 +10,13 @@ error[E0277]: `TestType` doesn't implement `std::fmt::Display`
   --> tests/ui/multi_line.rs:15:37
    |
 15 | static_assertions::assert_impl_all!(TestType: core::fmt::Display);
-   |                                     ^^^^^^^^ `TestType` cannot be formatted with the default formatter
+   |                                     ^^^^^^^^ unsatisfied trait bound
    |
-   = help: the trait `std::fmt::Display` is not implemented for `TestType`
-   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+help: the trait `std::fmt::Display` is not implemented for `TestType`
+  --> tests/ui/multi_line.rs:5:1
+   |
+ 5 | enum TestType {
+   | ^^^^^^^^^^^^^
 note: required by a bound in `assert_impl_all`
   --> tests/ui/multi_line.rs:15:1
    |
