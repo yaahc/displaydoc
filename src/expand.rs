@@ -92,11 +92,12 @@ fn impl_struct(input: &DeriveInput, data: &DataStruct) -> Result<TokenStream> {
         quote! {
             impl #impl_generics ::core::fmt::Display for #ty #ty_generics #where_clause {
                 fn fmt(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
-                    // NB: This destructures the fields of `self` into named variables (for unnamed
-                    // fields, it uses _0, _1, etc as above). The `#[allow(unused_variables)]`
-                    // section means it doesn't have to parse the individual field references out of
-                    // the docstring.
-                    #[allow(unused_variables)]
+                    // NB: This destructures the fields of `self` into named
+                    // variables (for unnamed fields, it uses _0, _1, etc as
+                    // above). The `#[allow(unused_variables, unused_assignments)]`
+                    // section means it doesn't have to parse the individual field
+                    // references out of the docstring.
+                    #[allow(unused_variables, unused_assignments)]
                     let #pat = self;
                     #display
                 }
@@ -396,7 +397,7 @@ fn impl_enum(input: &DeriveInput, data: &DataEnum) -> Result<TokenStream> {
         Ok(quote! {
             impl #impl_generics ::core::fmt::Display for #ty #ty_generics #where_clause {
                 fn fmt(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
-                    #[allow(unused_variables)]
+                    #[allow(unused_variables, unused_assignments)]
                     match self {
                         #(#arms,)*
                     }
