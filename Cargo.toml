@@ -13,6 +13,7 @@ keywords = ["display", "derive"]
 description = """
 A derive macro for implementing the display Trait via a doc comment and string interpolation
 """
+include = ["Cargo.toml", "README.md", "LICENSE-MIT", "LICENSE-APACHE", "CHANGELOG.md", "src/**/*.rs", "tests/**/*.rs"]
 
 [lib]
 proc-macro = true
