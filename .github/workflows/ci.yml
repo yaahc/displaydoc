@@ -21,6 +21,14 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
           override: true
+      - name: Downgrade deps for MSRV
+        if: ${{ matrix.rust == '1.56.0' }}
+        run: |
+          cargo update -p libc --precise 0.2.160
+          cargo update -p pretty_assertions --precise 1.4.0
+          cargo update -p proc-macro2 --precise 1.0.101
+          cargo update -p quote --precise 1.0.40
+          cargo update -p glob --precise 0.3.2
       - uses: actions-rs/cargo@v1
         with:
           command: check
@@ -77,6 +85,9 @@ jobs:
         run: |
           cargo update -p libc --precise 0.2.160
           cargo update -p pretty_assertions --precise 1.4.0
+          cargo update -p proc-macro2 --precise 1.0.101
+          cargo update -p quote --precise 1.0.40
+          cargo update -p glob --precise 0.3.2
       - uses: actions-rs/cargo@v1
         with:
           command: test
