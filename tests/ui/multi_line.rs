@@ -8,7 +8,10 @@ enum TestType {
 
     /// Multi
     /// line
-    /// doc.
+    /// doc
+    /// is
+    /// pretty
+    /// swell
     Variant2,
 }
 
