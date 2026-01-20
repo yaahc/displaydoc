@@ -1,0 +1,25 @@
+error: proc-macro derive panicked
+ --> tests/ui/multi_line_line_break_block.rs:3:10
+  |
+3 | #[derive(Display)]
+  |          ^^^^^^^
+  |
+  = help: message: Line breaks in multi-line doc comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_extra_doc_attributes] attribute to your type next to the derive
+
+error[E0277]: `TestType` doesn't implement `std::fmt::Display`
+  --> tests/ui/multi_line_line_break_block.rs:12:37
+   |
+12 | static_assertions::assert_impl_all!(TestType: core::fmt::Display);
+   |                                     ^^^^^^^^ unsatisfied trait bound
+   |
+help: the trait `std::fmt::Display` is not implemented for `TestType`
+  --> tests/ui/multi_line_line_break_block.rs:10:1
+   |
+10 | struct TestType;
+   | ^^^^^^^^^^^^^^^
+note: required by a bound in `assert_impl_all`
+  --> tests/ui/multi_line_line_break_block.rs:12:1
+   |
+12 | static_assertions::assert_impl_all!(TestType: core::fmt::Display);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `assert_impl_all`
+   = note: this error originates in the macro `static_assertions::assert_impl_all` (in Nightly builds, run with -Z macro-backtrace for more info)

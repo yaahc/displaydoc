@@ -11,6 +11,15 @@ enum TestType {
     /// line
     /// doc.
     Variant2,
+
+    /// Multi
+    /// line
+    /// doc
+    ///
+    /// with
+    /// line
+    /// breaks
+    Variant3,
 }
 
 static_assertions::assert_impl_all!(TestType: core::fmt::Display);
