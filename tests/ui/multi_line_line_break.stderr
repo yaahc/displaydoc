@@ -4,7 +4,7 @@ error: proc-macro derive panicked
 3 | #[derive(Display)]
   |          ^^^^^^^
   |
-  = help: message: Line breaks in multi-line doc comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_extra_doc_attributes] attribute to your type next to the derive
+  = help: message: Paragraph breaks in multi-line doc comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_extra_doc_attributes] attribute to your type next to the derive
 
 error[E0277]: `TestType` doesn't implement `std::fmt::Display`
   --> tests/ui/multi_line_line_break.rs:18:37

@@ -107,7 +107,7 @@ impl AttrsHelper {
         } else {
             strs.collect::<Option<Vec<_>>>()
         }.unwrap_or_else(|| {
-            panic!("Line breaks in multi-line doc comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_extra_doc_attributes] attribute to your type next to the derive");
+            panic!("Paragraph breaks in multi-line doc comments are disabled by default by displaydoc. Please consider using block doc comments (/** */) or adding the #[ignore_extra_doc_attributes] attribute to your type next to the derive");
         }).join(" ");
 
         let mut display = Display {
