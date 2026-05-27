@@ -28,6 +28,9 @@ jobs:
           cargo update -p pretty_assertions --precise 1.4.0
           cargo update -p proc-macro2 --precise 1.0.101
           cargo update -p quote --precise 1.0.40
+          cargo update -p unicode-ident --precise 1.0.8
+          cargo update -p itoa --precise 1.0.9
+          cargo update -p ryu --precise 1.0.13
           cargo update -p glob --precise 0.3.2
       - uses: actions-rs/cargo@v1
         with:
@@ -49,10 +52,7 @@ jobs:
           override: true
       - uses: Swatinem/rust-cache@v1
       - name: Install cargo-nextest
-        uses: baptiste0928/cargo-install@v1
-        with:
-          crate: cargo-nextest
-          version: 0.9
+        uses: taiki-e/install-action@nextest
       - uses: actions-rs/cargo@v1
         with:
           command: nextest
@@ -87,6 +87,9 @@ jobs:
           cargo update -p pretty_assertions --precise 1.4.0
           cargo update -p proc-macro2 --precise 1.0.101
           cargo update -p quote --precise 1.0.40
+          cargo update -p unicode-ident --precise 1.0.8
+          cargo update -p itoa --precise 1.0.9
+          cargo update -p ryu --precise 1.0.13
           cargo update -p glob --precise 0.3.2
       - uses: actions-rs/cargo@v1
         with:
