@@ -1,6 +1,6 @@
 [package]
 name = "displaydoc"
-version = "0.2.5"
+version = "0.2.6"
 rust-version = "1.56.0"
 authors = ["Jane Lusby <jlusby@yaah.dev>"]
 edition = "2021"
