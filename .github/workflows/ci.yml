@@ -14,7 +14,7 @@ jobs:
       matrix:
         rust:
           - stable
-          - 1.56.0
+          - 1.71.0
     steps:
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
@@ -22,16 +22,15 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - name: Downgrade deps for MSRV
-        if: ${{ matrix.rust == '1.56.0' }}
+        if: ${{ matrix.rust == '1.71.0' }}
         run: |
-          cargo update -p libc --precise 0.2.160
-          cargo update -p pretty_assertions --precise 1.4.0
-          cargo update -p proc-macro2 --precise 1.0.101
-          cargo update -p quote --precise 1.0.40
-          cargo update -p unicode-ident --precise 1.0.8
-          cargo update -p itoa --precise 1.0.9
-          cargo update -p ryu --precise 1.0.13
-          cargo update -p glob --precise 0.3.2
+          cargo update -p trybuild --precise 1.0.111
+          cargo update -p indexmap --precise 2.13.1
+          cargo update -p toml --precise 0.9.6
+          cargo update -p toml_datetime --precise 0.7.1
+          cargo update -p toml_parser --precise 1.0.2
+          cargo update -p toml_writer --precise 1.0.2
+          cargo update -p serde_spanned --precise 1.0.1
       - uses: actions-rs/cargo@v1
         with:
           command: check
@@ -72,7 +71,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - 1.56.0
+          - 1.71.0
     steps:
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
@@ -80,17 +79,15 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - uses: Swatinem/rust-cache@v1
-
       - name: Downgrade deps for MSRV
         run: |
-          cargo update -p libc --precise 0.2.160
-          cargo update -p pretty_assertions --precise 1.4.0
-          cargo update -p proc-macro2 --precise 1.0.101
-          cargo update -p quote --precise 1.0.40
-          cargo update -p unicode-ident --precise 1.0.8
-          cargo update -p itoa --precise 1.0.9
-          cargo update -p ryu --precise 1.0.13
-          cargo update -p glob --precise 0.3.2
+          cargo update -p trybuild --precise 1.0.111
+          cargo update -p indexmap --precise 2.13.1
+          cargo update -p toml --precise 0.9.6
+          cargo update -p toml_datetime --precise 0.7.1
+          cargo update -p toml_parser --precise 1.0.2
+          cargo update -p toml_writer --precise 1.0.2
+          cargo update -p serde_spanned --precise 1.0.1
       - uses: actions-rs/cargo@v1
         with:
           command: test
@@ -106,7 +103,7 @@ jobs:
       matrix:
         rust:
           - stable
-          - 1.56.0
+          - 1.71.0
     steps:
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
