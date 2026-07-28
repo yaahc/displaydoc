@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # [Unreleased] - ReleaseDate
 
 ## Added
+
+## Changed
+
+# [0.2.7] - 2026-07-28
+
+## Added
 - Updated `syn` dependency to 3.0
 
 ## Changed
@@ -67,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   lines are needed.
 
 <!-- next-url -->
-[Unreleased]: https://github.com/yaahc/displaydoc/compare/v0.2.6...HEAD
+[Unreleased]: https://github.com/yaahc/displaydoc/compare/v0.2.7...HEAD
+[0.2.7]: https://github.com/yaahc/displaydoc/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/yaahc/displaydoc/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/yaahc/displaydoc/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/yaahc/displaydoc/compare/v0.2.3...v0.2.4
