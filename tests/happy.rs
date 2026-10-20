@@ -4,6 +4,13 @@ use displaydoc::Display;
 use std::path::PathBuf;
 
 #[derive(Display)]
+enum DocAlias {
+    /// Station Mode
+    #[doc(alias = "Baz")]
+    Bar,
+}
+
+#[derive(Display)]
 /// Just a basic struct {thing}
 struct HappyStruct {
     thing: &'static str,
@@ -150,6 +157,7 @@ fn does_it_print() {
         "Variant7 has a parameter 2 and uses #[displaydoc]",
     );
     assert_display(HappyStruct { thing: "hi" }, "Just a basic struct hi");
+    assert_display(DocAlias::Bar, "Station Mode");
 
     assert_display(
         HappyStruct2 { thing: "hi2" },

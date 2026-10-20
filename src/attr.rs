@@ -69,10 +69,12 @@ impl AttrsHelper {
             return Ok(Some(display));
         }
 
+        // Only `#[doc = "..."]` carries text; other doc attributes such as
+        // `#[doc(alias = "...")]` or `#[doc(hidden)]` are skipped.
         let literals = attrs
             .iter()
             .filter(|attr| attr.path().is_ident("doc"))
-            .map(|attr| match &attr.meta {
+            .filter_map(|attr| match &attr.meta {
                 Meta::NameValue(syn::MetaNameValue {
                     value:
                         syn::Expr::Lit(syn::ExprLit {
@@ -80,8 +82,8 @@ impl AttrsHelper {
                             ..
                         }),
                     ..
-                }) => lit,
-                _ => unimplemented!(),
+                }) => Some(lit),
+                _ => None,
             });
 
         let span = match literals.clone().next() {
