@@ -22,4 +22,8 @@ note: required by a bound in `assert_impl_all`
    |
 12 | static_assertions::assert_impl_all!(TestType: core::fmt::Display);
    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `assert_impl_all`
+   |
+  ::: $CARGO/static_assertions-$VERSION/src/assert_impl.rs
+   |
+   |             fn assert_impl_all<T: ?Sized $(+ $trait)+>() {}
    = note: this error originates in the macro `static_assertions::assert_impl_all` (in Nightly builds, run with -Z macro-backtrace for more info)
