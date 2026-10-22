@@ -1,0 +1,5 @@
+error: displaydoc can only read doc comments that are string literals; give the format with #[displaydoc("...")] instead
+ --> tests/ui/non_string_doc_expr.rs:4:9
+  |
+4 | #[doc = include_str!("non_string_doc_expr.txt")]
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

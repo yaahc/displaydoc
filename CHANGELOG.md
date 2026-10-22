@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 - Doc attributes other than `#[doc = "..."]`, such as `#[doc(alias = "...")]`, are skipped instead of making the derive panic
+- A `#[doc = ...]` whose value isn't a string literal, such as `#[doc = include_str!("...")]`, is reported as a compile error pointing at it, instead of a panic (#61)
 
 # [0.2.7] - 2026-07-28
 
