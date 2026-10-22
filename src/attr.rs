@@ -69,6 +69,33 @@ impl AttrsHelper {
             return Ok(Some(display));
         }
 
+        // A `#[doc = ...]` whose value isn't a string literal, such as
+        // `include_str!(...)`, can't be read at derive time, so it is reported
+        // rather than skipped.
+        if let Some(value) = attrs
+            .iter()
+            .filter(|attr| attr.path().is_ident("doc"))
+            .find_map(|attr| match &attr.meta {
+                Meta::NameValue(syn::MetaNameValue { value, .. })
+                    if !matches!(
+                        value,
+                        syn::Expr::Lit(syn::ExprLit {
+                            lit: syn::Lit::Str(_),
+                            ..
+                        })
+                    ) =>
+                {
+                    Some(value)
+                }
+                _ => None,
+            })
+        {
+            return Err(syn::Error::new_spanned(
+                value,
+                "displaydoc can only read doc comments that are string literals; supply the Display text with #[displaydoc(\"...\")] instead",
+            ));
+        }
+
         // Only `#[doc = "..."]` carries text; other doc attributes such as
         // `#[doc(alias = "...")]` or `#[doc(hidden)]` are skipped.
         let literals = attrs

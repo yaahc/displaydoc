@@ -4,6 +4,7 @@
 fn no_std() {
     let t = trybuild::TestCases::new();
     t.compile_fail("tests/ui/without.rs");
+    t.compile_fail("tests/ui/non_string_doc_expr.rs");
     t.compile_fail("tests/ui/multi_line_line_break.rs");
     t.compile_fail("tests/ui/multi_line_line_break_block.rs");
     t.pass("tests/ui/multi_line.rs");
