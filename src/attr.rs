@@ -92,7 +92,7 @@ impl AttrsHelper {
         {
             return Err(syn::Error::new_spanned(
                 value,
-                "displaydoc can only read doc comments that are string literals; give the format with #[displaydoc(\"...\")] instead",
+                "displaydoc can only read doc comments that are string literals; supply the Display text with #[displaydoc(\"...\")] instead",
             ));
         }
 
